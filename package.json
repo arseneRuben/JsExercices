@@ -1,0 +1,22 @@
+{
+    "name": "programmation-web-2_a22",
+    "version": "1.0.0",
+    "description": "420-W11-SU_Programmation-Web-2_A22",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "eslint": "^8.25.0",
+        "eslint-config-standard": "^17.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^6.1.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@work_isi_id:isiteachers/programmation-web-2_a22.git"
+    },
+    "author": "Martin Vachon",
+    "license": "ISC"
+}
