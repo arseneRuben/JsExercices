@@ -5,10 +5,10 @@ function createItem (item) {
 }
 
 function createList (tab) {
-    let str = ''
+    let str = '<ul>'
 
     tab.forEach(element => {
         str += createItem(element)
     })
-    return str
+    return str + '</ul>'
 }
