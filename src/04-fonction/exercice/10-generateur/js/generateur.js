@@ -4,11 +4,11 @@ function createItem (item) {
     return '<li>' + item + '</li>'
 }
 
-function createList (tab) {
-    let str = '<ul>'
+function createList (tableauItem) {
+    let chaineEnSortie = '<ul>'
 
-    tab.forEach(element => {
-        str += createItem(element)
+    tableauItem.forEach(element => {
+        chaineEnSortie += createItem(element)
     })
-    return str + '</ul>'
+    return chaineEnSortie + '</ul>'
 }
