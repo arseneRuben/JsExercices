@@ -27,7 +27,8 @@ function execute (operateur, a, b) {
             result = "Nom de l'operation inconnu"
             break
         }
-    } else if (typeof (operateur) === 'function') {
+    } else
+    if (typeof (operateur) === 'function') {
         result = operateur(a, b)
     } else {
         result = "Type de l'operation inconnu"
