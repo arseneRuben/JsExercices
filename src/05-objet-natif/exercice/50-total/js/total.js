@@ -11,30 +11,30 @@ const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'
 
 const SALES = [120, 500, 350, 400, 600, 890, 450, 100, 250, 300, 650, 450]
 // Traitement de l'affichage vertical
-let htmlSubTitle = '<h2>Affichage vertical</h2>'
-let htmlCode = '<table>'
+const htmlSubTitleVerticalArray = '<h2>Affichage vertical</h2>'
+let htmlCodeVertivalArray = '<table>'
 let total = 0
 MONTHS.forEach((month, index) => {
-    htmlCode += '<tr><td>' + month + '</td>' + '<td>' + SALES[index] + '</td></tr>'
+    htmlCodeVertivalArray += '<tr><td>' + month + '</td>' + '<td>' + SALES[index] + '</td></tr>'
     total += SALES[index]
 })
-htmlCode += '<tr><td><strong>Total</strong></td><td><strong>' + total + ' $</strong></td></tr>'
-htmlCode += '</table>'
+htmlCodeVertivalArray += '<tr><td><strong>Total</strong></td><td><strong>' + total + ' $</strong></td></tr>'
+htmlCodeVertivalArray += '</table>'
 
-document.write(htmlSubTitle)
-document.write(htmlCode)
+document.write(htmlSubTitleVerticalArray)
+document.write(htmlCodeVertivalArray)
 
 // Traitement de l'affichage horizontal
 
-htmlSubTitle = '<h2>Affichage horizontal</h2>'
-htmlCode = '<table><tr>'
+const htmlSubTitleHorizontalArray = '<h2>Affichage horizontal</h2>'
+let htmlCodeHorizontalArray = '<table><tr>'
 MONTHS.forEach((month) => {
-    htmlCode += '<td>' + month + '</td>'
+    htmlCodeHorizontalArray += '<td>' + month + '</td>'
 })
-htmlCode += '<td><strong>Total</strong></td></tr><tr>'
+htmlCodeHorizontalArray += '<td><strong>Total</strong></td></tr><tr>'
 SALES.forEach((sale) => {
-    htmlCode += '<td>' + sale + '</td>'
+    htmlCodeHorizontalArray += '<td>' + sale + '</td>'
 })
-htmlCode += '<td><strong>' + total + ' $</strong></tr>'
-document.write(htmlSubTitle)
-document.write(htmlCode)
+htmlCodeHorizontalArray += '<td><strong>' + total + ' $</strong></tr>'
+document.write(htmlSubTitleHorizontalArray)
+document.write(htmlCodeHorizontalArray)
