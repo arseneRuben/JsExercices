@@ -12,9 +12,9 @@ const resultat = []
 
 // Compléter le code pour remplir le Array resultat dans un ordre aléatoire
 // Premier trie aleatoire du tableau initial
-const temp = initial.sort(() => Math.random() - 0.5)
-temp.forEach((element, index) => {
-    // Construction des element du tableau resultant a partir du tableau trier aleatoirement
+initial.sort(() => Math.random() - 0.5)
+initial.forEach((element, index) => {
+    // Construction des element du tableau resultant a partir du tableau trie aleatoirement
     resultat[index] = element
 })
 console.log('Résultat', resultat)
