@@ -19,7 +19,11 @@ AGES.forEach((groupe, index) => {
         i++
         item = groupe[i]
     }
-    if (i === groupe.length) { result = 'sont tous adultes' } else { result = 'ne sont pas tous adultes' }
+    if (i === groupe.length) {
+        result = 'sont tous adultes'
+    } else {
+        result = 'ne sont pas tous adultes'
+    }
 
     document.write('<tr><td> groupe ' + index + '</td><td>' + result + '</td></tr>')
 })
