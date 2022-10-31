@@ -13,7 +13,7 @@ function createWithCreateElement () {
     const elementContent = document.getElementById('elementContent').value
 
     const element = document.createElement(elementType)
-    element.className = 'create-element'
+    element.classList.add('create-element')
     const textNode = document.createTextNode(elementContent)
     element.appendChild(textNode)
     output.appendChild(element)
