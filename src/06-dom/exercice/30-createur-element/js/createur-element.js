@@ -5,7 +5,7 @@ function createWithInnerHTML () {
     const elementType = document.getElementById('elementType').value
     const elementContent = document.getElementById('elementContent').value
 
-    output.innerHTML = '<' + elementType + '>' + elementContent + '</' + elementType + '>'
+    output.innerHTML += '<' + elementType + ' class="inner-html">' + elementContent + '</' + elementType + '>'
 }
 
 function createWithCreateElement () {
@@ -13,6 +13,7 @@ function createWithCreateElement () {
     const elementContent = document.getElementById('elementContent').value
 
     const element = document.createElement(elementType)
+    element.className = 'create-element'
     const textNode = document.createTextNode(elementContent)
     element.appendChild(textNode)
     output.appendChild(element)
