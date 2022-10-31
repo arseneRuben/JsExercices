@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice - createur-element</title>
+    <style>
+        .inner-html {
+            background-color: #f5ccf8;
+        }
+
+        .create-element {
+            background-color: #c4f8c5;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Créateur d'éléments</h1>
+
+    <div>
+        <label for="elementType">Type d'élément :</label>
+        <select id="elementType">
+            <option value="p">p</option>
+            <option value="h2">h2</option>
+            <option value="span">span</option>
+        </select>
+
+        <label for="elementContent">Texte du contenu:</label>
+        <input type="text" id="elementContent" value="Bla bla bla" />
+
+        <button onclick="createWithInnerHTML();">Crée l'élément avec innerHTML</button>
+        <button onclick="createWithCreateElement();">Crée l'élément avec createElement</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script src="js/createur-element.js"></script>
+</body>
+
+</html>

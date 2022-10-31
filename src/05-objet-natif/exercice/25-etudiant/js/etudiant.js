@@ -34,7 +34,7 @@ const resultats = [
 let htmlCode = ''
 etudiants.forEach((student, index) => {
     let resultIndex = 0
-    let tableRow = '<tr><td>' + student.id + '</td>' + '<td>' + student.name + '</td>'
+    let tableRow = '<tr>cd ..<td>' + student.id + '</td>' + '<td>' + student.name + '</td>'
     while (resultIndex < resultats.length && student.id !== resultats[resultIndex].id) {
         resultIndex++
     }

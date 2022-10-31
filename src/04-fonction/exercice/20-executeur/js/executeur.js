@@ -12,7 +12,7 @@ function execute (operateur, a, b) {
         return a * b
     }
     let result
-    if (typeof (operateur) === 'string') {
+    if (typeof operateur === 'string') {
         switch (operateur) {
         case 'ADD':
             result = add(a, b)
@@ -28,7 +28,7 @@ function execute (operateur, a, b) {
             break
         }
     } else
-    if (typeof (operateur) === 'function') {
+    if (typeof operateur === 'function') {
         result = operateur(a, b)
     } else {
         result = "Type de l'operation inconnu"
