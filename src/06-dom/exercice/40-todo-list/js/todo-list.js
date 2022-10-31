@@ -10,5 +10,7 @@ function addNewLiElement () {
 }
 
 function deleteLastLiElement () {
-    uListe.removeChild(uListe.lastChild)
+    if (uListe.children.length) {
+        uListe.removeChild(uListe.lastChild)
+    }
 }
