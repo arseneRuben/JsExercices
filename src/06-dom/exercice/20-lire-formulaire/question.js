@@ -6,4 +6,3 @@
  *  Compléter le code manquant pour obtenir le résultat des maquettes.
  *  Ne pas modifier le code HTML
  */
-'use strict'
