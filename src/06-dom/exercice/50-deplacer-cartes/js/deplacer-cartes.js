@@ -2,10 +2,7 @@
 const cartes = document.getElementById('cartes')
 
 function tournerGauche () {
-    let carte1 = cartes.firstElementChild
-    cartes.removeChild(carte1)
-    cartes.appendChild(carte1)
-    carte1 = cartes.firstElementChild
+    const carte1 = cartes.firstElementChild
     cartes.removeChild(carte1)
     cartes.appendChild(carte1)
 }

@@ -1,0 +1,55 @@
+/**
+.color1 {color: #261c06;}
+.color2 {color: #34430f;}
+.color3 {color: #d48a6a;}
+.color4 {color: #d9c17c;}
+.color5 {color: #e7e5b9;}
+*/
+
+body {
+    background-color: #34430f;
+    font-family: arial, times new roman, georgia, serif;
+    font-size: 1.2em;
+}
+
+h1 {
+    color: gold;
+    font-family: 'Fredericka the Great', cursive;
+}
+
+main {
+    display: flex;
+}
+
+.frame {
+    width: 250px;
+    background-color: #d9c17c;
+    padding: 20px;
+}
+
+.frame img {
+    width: 20px;
+    margin: 0 10px 0 10px;
+}
+
+.frame label {
+    display: inline-block;
+    width: 150px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin-left: 25px;
+}
+
+.gallery>div {
+    padding: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #261c06;
+}
+
+.gallery img {
+    z-index: -1000;
+}

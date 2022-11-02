@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+    <h1>Formulaire</h1>
+
+    <ul id="validation_message">
+
+    </ul>
+
+    <form action="server.php">
+        <div>
+            <label for="productNumber">Numéro</label>
+            <input type="text" name="productNumber" id="productNumber">
+        </div>
+        <div>
+            <label for="productPrice">Prix</label>
+            <input type="number" name="productPrice" id="productPrice">
+        </div>
+        <div>
+            <input type="submit" value="Soumettre">
+        </div>
+    </form>
+    <script src="js/form.js"></script>
+</body>
+
+</html>
