@@ -10,10 +10,12 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     const dayNumber = document.getElementById('dayNumber')
     const dayLabel = document.querySelector('div>div:nth-child(2)')
 
+    // By default
     let jours = JOURS_FR
     checkBoxElement.addEventListener('change', function (event) {
         changeLanguage(event)
     })
+
     function changeLanguage (event) {
         if (checkBoxElement.checked) {
             jours = JOURS_EN
@@ -22,12 +24,11 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
         }
     }
 
-    dayNumber.addEventListener('change', function (event) {
+    dayNumber.addEventListener('mousemove', function (event) {
         changeDayLabel(event)
     })
+
     function changeDayLabel (event) {
         dayLabel.children[0].innerHTML = jours[event.target.value]
     }
-
-    const rangeElement = document.getElementById('dayNumber')
 }, false)
