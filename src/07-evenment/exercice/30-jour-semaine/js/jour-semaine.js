@@ -7,8 +7,14 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     window.removeEventListener('DOMContentLoaded', loaded, false)
 
     const checkBoxElement = document.getElementById('language')
+    const dayNumber = document.getElementById('dayNumber')
+    const dayLabel = document.querySelector('div>div:nth-child(2)')
 
-    function changeLanguage (event, jours) {
+    let jours = JOURS_FR
+    checkBoxElement.addEventListener('change', function (event) {
+        changeLanguage(event)
+    })
+    function changeLanguage (event) {
         if (checkBoxElement.checked) {
             jours = JOURS_EN
         } else {
@@ -16,11 +22,12 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
         }
     }
 
-    const rangeElement = document.getElementById('dayNumber')
-
-    let jours
-    checkBoxElement.addEventListener('change', function (event) {
-        changeLanguage(event, jours)
+    dayNumber.addEventListener('change', function (event) {
+        changeDayLabel(event)
     })
-    console.log(jours)
+    function changeDayLabel (event) {
+        dayLabel.children[0].innerHTML = jours[event.target.value]
+    }
+
+    const rangeElement = document.getElementById('dayNumber')
 }, false)
