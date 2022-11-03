@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
 
     // By default
     let jours = JOURS_FR
-    checkBoxElement.addEventListener('change', function (event) {
+    checkBoxElement.addEventListener('input', function (event) {
         changeLanguage(event)
     })
 
@@ -22,9 +22,10 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
         } else {
             jours = JOURS_FR
         }
+        dayLabel.children[0].innerHTML = jours[dayNumber.value]
     }
 
-    dayNumber.addEventListener('mousemove', function (event) {
+    dayNumber.addEventListener('input', function (event) {
         changeDayLabel(event)
     })
 
