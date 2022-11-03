@@ -8,7 +8,6 @@ const form = document.getElementsByTagName('form')[0]
 const validationMessages = document.getElementById('validation_message')
 
 form.addEventListener('submit', (event) => {
-    event.preventDefault()
     freeErrorMessage()
     const numberErrors = validateNumber(); const priceErrors = validatePrice()
     if (numberErrors.length > 0 || priceErrors.length > 0) {
@@ -29,6 +28,7 @@ form.addEventListener('submit', (event) => {
             })
         }
     } else {
+        event.preventDefault()
         alert('Sounission du formulaire')
     }
 })
