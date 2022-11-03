@@ -7,7 +7,6 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     function onSelect (event) {
         const inputValue = event.target.value
         const galleryDivs = document.querySelectorAll('div.gallery>div')
-
         galleryDivs.forEach(div => {
             div.style.backgroundImage = "url('image/" + inputValue + ".png')"
         })
