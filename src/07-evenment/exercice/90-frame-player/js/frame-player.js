@@ -11,7 +11,9 @@ window.addEventListener('load', function loaded (event) {
     let intervalID
     let i = 1
     function setImage () {
-        const image = (i < 10) ? 'img000' + (i) + '-min.jpg' : 'img00' + (i) + '-min.jpg'
+        // const image = (i < 10) ? 'img000' + (i) + '-min.jpg' : 'img00' + (i) + '-min.jpg'
+        const image = 'img' + (i + '').padStart(4, '0') + '-min.jpg'
+
         frameImage.src = ('image/' + image)
         frameRange.value = i
         if (i === IMAGE_NUMBER) {
