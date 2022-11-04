@@ -22,7 +22,13 @@ function updateCitySelect (event) {
         citySelect.appendChild(optionElement)
     })
 }
-
+function updateComponent (component) {
+    const optionElement = document.createElement('option')
+    optionElement.value = component
+    const textNode = document.createTextNode(component)
+    optionElement.appendChild(textNode)
+    citySelect.appendChild(optionElement)
+}
 citySelect.addEventListener('input', updateOutput)
 
 function updateOutput (event) {

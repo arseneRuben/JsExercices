@@ -8,11 +8,14 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     window.removeEventListener('DOMContentLoaded', loaded, false)
     const knight = document.getElementById('knight')
 
-    const intervalID = setInterval(setBackgroundImage, 250)
+    const intervalID = setInterval(setBackgroundImage, 100)
     function setBackgroundImage () {
-        knight.style.backgroundImage = 'url(js/spritesheet.png)'
-        knight.style.backgroundPosition = 'top 0px left ' + IMAGE_WIDTH * i++ + 'px'
+        knight.style.backgroundPosition = 'top 0px left ' + (IMAGE_WIDTH * i) + 'px'
 
-        if (i === 10) i = 1
+        if (i === SPRITE_WIDTH / IMAGE_WIDTH) {
+            i = 1
+        } else {
+            i += 1
+        }
     }
 }, false)
