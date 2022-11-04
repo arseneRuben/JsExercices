@@ -8,7 +8,7 @@ window.addEventListener('load', function loaded (event) {
     window.removeEventListener('load', loaded, false)
     const knight = document.getElementById('knight')
 
-    const intervalID = setInterval(setBackgroundImage, 100)
+    setInterval(setBackgroundImage, 100)
     function setBackgroundImage () {
         knight.style.backgroundPosition = 'top 0px left ' + (IMAGE_WIDTH * i) + 'px'
 

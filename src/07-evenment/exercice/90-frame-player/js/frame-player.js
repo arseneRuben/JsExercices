@@ -1,19 +1,30 @@
 'use strict'
-// Largeur d'une seul image
-const IMAGE_WIDTH = 587
-// Largeur de tout le fichier spritesheet.png
-const SPRITE_WIDTH = 35220
 
-window.addEventListener('DOMContentLoaded', function loaded (event) {
-    window.removeEventListener('DOMContentLoaded', loaded, false)
+window.addEventListener('load', function loaded (event) {
+    window.removeEventListener('load', loaded, false)
     const frameImage = document.getElementById('frameImage')
+    const frameRange = document.getElementById('frameRange')
+    const stopButton = document.getElementById('stopButton')
+    const playButton = document.getElementById('playButton')
 
-    const intervalID = setInterval(setImage, 500)
+    const IMAGE_NUMBER = 36
+    let intervalID
     let i = 1
     function setImage () {
-        // console.log("url(decodeURI('../freeknight/png/Jump (" + (i++) + ").png'))")
-        frameImage.src = 'img0001-min.jpg'
-
-        if (i === 10) i = 1
+        const image = (i < 10) ? 'img000' + (i) + '-min.jpg' : 'img00' + (i) + '-min.jpg'
+        frameImage.src = ('image/' + image)
+        frameRange.value = i
+        if (i === IMAGE_NUMBER) {
+            i = 1
+        } else {
+            i++
+        }
     }
+
+    stopButton.addEventListener('click', function () {
+        clearInterval(intervalID)
+    })
+    playButton.addEventListener('click', function () {
+        intervalID = setInterval(setImage, 100)
+    })
 }, false)
