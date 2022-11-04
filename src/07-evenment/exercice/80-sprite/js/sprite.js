@@ -4,8 +4,8 @@ const IMAGE_WIDTH = 587
 // Largeur de tout le fichier spritesheet.png
 const SPRITE_WIDTH = 35220
 let i = 1
-window.addEventListener('DOMContentLoaded', function loaded (event) {
-    window.removeEventListener('DOMContentLoaded', loaded, false)
+window.addEventListener('load', function loaded (event) {
+    window.removeEventListener('load', loaded, false)
     const knight = document.getElementById('knight')
 
     const intervalID = setInterval(setBackgroundImage, 100)
