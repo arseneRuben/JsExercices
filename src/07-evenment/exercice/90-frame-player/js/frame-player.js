@@ -9,7 +9,7 @@ window.addEventListener('load', function loaded (event) {
 
     const IMAGE_NUMBER = 36
     let intervalID
-    let i = 1
+    let i = frameRange.value
     function setImage () {
         // const image = (i < 10) ? 'img000' + (i) + '-min.jpg' : 'img00' + (i) + '-min.jpg'
         const image = 'img' + (i + '').padStart(4, '0') + '-min.jpg'
@@ -27,6 +27,11 @@ window.addEventListener('load', function loaded (event) {
         clearInterval(intervalID)
     })
     playButton.addEventListener('click', function () {
-        intervalID = setInterval(setImage, 100)
+        intervalID = setInterval(setImage, 200)
+    })
+    frameRange.addEventListener('input', function () {
+        const image = 'img' + (frameRange.value + '').padStart(4, '0') + '-min.jpg'
+
+        frameImage.src = ('image/' + image)
     })
 }, false)
