@@ -1,0 +1,44 @@
+.wrapper {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.item {
+    display: inline-block;
+    width: 35px;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: text-bottom;
+    border: 2px solid darkgreen;
+}
+
+.item[draggable="true"] {
+    background: #78f10f;
+}
+
+#dropArea {
+    float: right;
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+    box-shadow: 10px 10px 5px #888888;
+    position: relative;
+    padding-top: 20px;
+}
+
+#dropArea .item {
+    pointer-events: none;
+}
+
+#dropArea.entered {
+    box-shadow: 10px 10px 5px orange;
+    transition: box-shadow 10ms;
+}
+
+#dropArea span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

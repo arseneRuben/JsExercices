@@ -1,0 +1,9 @@
+#knight {
+    width: 587px;
+    height: 707px;
+
+    background-image: url(spritesheet.png);
+    margin: 0 auto 0 auto;
+
+    /* transform: scaleX(-1); */
+}

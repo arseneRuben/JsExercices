@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice - frame-player</title>
+    <style>
+        body>div {
+            border: 1px solid black;
+            width: 1000px;
+            margin: auto;
+            padding: 15px;
+            text-align: center;
+        }
+
+        input[type=range] {
+            width: 95%;
+        }
+
+        .control button {
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+    <script src="js/frame-player.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="view">
+            <img id="frameImage" src="image/img0001-min.jpg" alt="frame image" />
+        </div>
+        <div class="control">
+            <div>
+                <input type="range" id="frameRange" min="1" max="36" value="1" />
+            </div>
+            <div>
+                <button id="playButton">Play</button>
+                <button id="stopButton">Stop</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
