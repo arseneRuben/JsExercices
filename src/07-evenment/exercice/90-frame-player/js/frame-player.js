@@ -10,9 +10,14 @@ window.addEventListener('load', function loaded (event) {
     const IMAGE_NUMBER = 36
     let intervalID
     let i = frameRange.value
+    let image = 'img' + (i + '').padStart(4, '0') + '-min.jpg'
+
     function setImage () {
+        image = 'img' + (i + '').padStart(4, '0') + '-min.jpg'
+    }
+    function playImage () {
         // const image = (i < 10) ? 'img000' + (i) + '-min.jpg' : 'img00' + (i) + '-min.jpg'
-        const image = 'img' + (i + '').padStart(4, '0') + '-min.jpg'
+        setImage()
 
         frameImage.src = ('image/' + image)
         frameRange.value = i
@@ -27,11 +32,10 @@ window.addEventListener('load', function loaded (event) {
         clearInterval(intervalID)
     })
     playButton.addEventListener('click', function () {
-        intervalID = setInterval(setImage, 200)
+        intervalID = setInterval(playImage, 200)
     })
     frameRange.addEventListener('input', function () {
-        const image = 'img' + (frameRange.value + '').padStart(4, '0') + '-min.jpg'
-
+        setImage()
         frameImage.src = ('image/' + image)
     })
 }, false)
