@@ -26,7 +26,7 @@ window.addEventListener('load', function loaded (event) {
         draggableItem.addEventListener('dragstart', dragstartHandler)
     })
 
-    const dropArea = document.getElementById('dropArea')
+    /* const dropArea = document.getElementById('dropArea')
     dropArea.ondrop = dropHandler(event)
-    dropArea.ondragover = dragoverHandler(event)
+    dropArea.ondragover = dragoverHandler(event) */
 }, false)
