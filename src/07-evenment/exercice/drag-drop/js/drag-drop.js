@@ -1,32 +1,41 @@
 'use strict'
 
-window.addEventListener('load', function loaded (event) {
-    window.removeEventListener('load', loaded, false)
+window.addEventListener('DOMContentLoaded', function loaded (event) {
+    window.removeEventListener('DOMContentLoaded', loaded, false)
 
     function dragstartHandler (ev) {
-        // Add the target element's id to the data transfer object
-        console.log(ev.target.innerText)
-        ev.dataTransfer.setData('application/my-app', ev.target.innerText)
-        ev.dataTransfer.dropEffect = 'move'
+        ev.dataTransfer.setData('text/plain', ev.target.innerText)
+        ev.dataTransfer.effectAllowed = 'move'
     }
+
     function dragoverHandler (ev) {
         ev.preventDefault()
-        ev.dataTransfer.dropEffect = 'move'
+
+        // ev.dataTransfer.dropEffect = 'move'
     }
     function dropHandler (ev) {
         ev.preventDefault()
-        // Get the id of the target and add the moved element to the target's DOM
-        const data = ev.dataTransfer.getData('application/my-app')
-        ev.target.appendChild(document.getElementById(data))
-    }
+        console.log(ev.dataTransfer)
+        const divElemt = document.createElement('div')
+        divElemt.draggable = true
+        divElemt.classList.add('item')
+        divElemt.innerHTML = ev.dataTransfer.getData('text/plain')
 
+        ev.target.appendChild(divElemt)
+    }
+    /*
+
+     function dragoverHandler (ev) {
+        ev.preventDefault()
+        ev.dataTransfer.dropEffect = 'move'
+    }
+*/
     const draggableItems = document.querySelectorAll("[draggable='true']")
+    const dropArea = document.getElementById('dropArea')
 
     draggableItems.forEach(draggableItem => {
         draggableItem.addEventListener('dragstart', dragstartHandler)
     })
-
-    /* const dropArea = document.getElementById('dropArea')
-    dropArea.ondrop = dropHandler(event)
-    dropArea.ondragover = dragoverHandler(event) */
+    dropArea.addEventListener('dragover', dragoverHandler)
+    dropArea.addEventListener('ondrop', dropHandler)
 }, false)
