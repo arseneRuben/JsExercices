@@ -20,12 +20,6 @@ window.addEventListener('load', function loaded (event) {
         ev.target.appendChild(document.getElementById(data))
     }
 
-    function onDrop (event) {
-        const data = event.dataTransfer.getData('text/plain')
-        event.target.textContent = data
-        event.preventDefault()
-    }
-
     const draggableItems = document.querySelectorAll("[draggable='true']")
 
     draggableItems.forEach(draggableItem => {
