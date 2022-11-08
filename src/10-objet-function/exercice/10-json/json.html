@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/json.css">
+    <script src="js/json.js"></script>
+    <title>JSON</title>
+</head>
+
+<body>
+    <div>
+        <form action="server.php">
+            <div>
+                <label for="firstName">Prénom</label>
+                <input type="text" name="firstName" id="firstName">
+            </div>
+            <div>
+                <label for="lastName">Nom de famille</label>
+                <input type="text" name="lastName" id="lastName">
+            </div>
+            <div>
+                <label for="age">Âge</label>
+                <input type="number" name="age" id="age">
+            </div>
+            <div>
+                <input type="submit" value="Soumettre">
+            </div>
+        </form>
+
+        <h2>Resultat</h2>
+        <pre id="output"></pre>
+    </div>
+</body>
+
+</html>

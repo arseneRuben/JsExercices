@@ -1,0 +1,29 @@
+fieldset {
+    width: 500px;
+    margin: 0 auto 0 auto;
+    position: relative;
+    padding: 12px;
+}
+
+fieldset label {
+    display: inline-block;
+    width: 100px;
+}
+
+fieldset input {
+    width: 250px;
+}
+
+fieldset span {
+    display: inline-block;
+    width: 50px;
+}
+
+div#rgb_display, div#hsl_display {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: 12px
+}
+

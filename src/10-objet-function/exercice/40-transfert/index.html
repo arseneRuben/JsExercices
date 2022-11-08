@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfert</title>
+    <link rel="stylesheet" href="css/transfert.css">
+    <script src="js/users.js"></script>
+    <script src="js/transfert.js"></script>
+
+    <script>
+        window.addEventListener('load', function load(event) {
+            window.removeEventListener('load', load)
+
+            // Initialization du module
+            Transfert.init({
+                // ID du UL contenant les usagers
+                userListId: 'userList',
+                // Titre pour la liste des usagers (balise H2)
+                userListTitle: 'Liste d\'usagers',
+                // ID du UL contenant le groupe d'usager
+                groupListId: 'groupList',
+                // Titre pour la liste contenant le groupe d'usager
+                groupListTitle: 'Groupe d\'usager',
+                // La collection d'usagers provenant du fichier js/users.js
+                users: users
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1>Gestion des groupes d'usagers.</h1>
+
+    <main>
+        <section>
+            <ul id="userList">
+
+            </ul>
+        </section>
+
+        <section>
+            <ul id="groupList">
+
+            </ul>
+        </section>
+    </main>
+
+</body>
+
+</html>

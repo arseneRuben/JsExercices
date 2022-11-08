@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice - collapsible</title>
+    <link rel="stylesheet" href="css/collapsible.css">
+
+    <style>
+        .collapsible {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <p>Première partie</p>
+
+        <div class="collapsible">
+            <h2>Premier élément</h2>
+            <div>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </div>
+        <div class="collapsible">
+            <h2>Deuxième élément</h2>
+            <div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <ul>
+                    <li>a</li>
+                    <li>b</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>Deuxième partie</p>
+
+        <div class="collapsible">
+            <h2>Troisième élément</h2>
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5OjMUJB4kNE" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/collapsible.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function loaded(event) {
+            window.removeEventListener('DOMContentLoaded', loaded, false)
+
+            Collapsible.init({ className: 'collapsible' })
+        }, false)
+    </script>
+</body>
+
+</html>

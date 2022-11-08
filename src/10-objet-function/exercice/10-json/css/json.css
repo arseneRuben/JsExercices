@@ -1,0 +1,17 @@
+body>div {
+    width: 400px;
+    margin: auto;
+}
+
+form label {
+    display: inline-block;
+    width: 200px;
+}
+
+form div {
+    padding-top: 15px;
+}
+
+form div:last-child {
+    text-align: center;
+}
