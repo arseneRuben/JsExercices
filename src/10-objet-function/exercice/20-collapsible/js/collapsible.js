@@ -1,31 +1,37 @@
-'use strict'
 
-function Collapsible (selector) {
-    this.selector = selector
-    //
+// eslint-disable-next-line no-unused-vars
+const Collapsible = (function (newClass) {
+    'use strict'
 
-    this.init = function (param) {
-        param.classList.add(this.selector)
+    function onClickOpenCloseHandler (event) {
+        const contains = event.target.classList.contains('collapsible-open')
+
+        event.target.classList.toggle('collapsible-open')
+        event.target.classList.toggle('collapsible-close')
+
+        if (contains) {
+            event.target.nextElementSibling.style.display = 'none'
+        } else {
+            event.target.nextElementSibling.style.display = 'block'
+        }
     }
-}
-
-const collapsibleH2 = new Collapsible('collapsible-h')
-const collapsibleOpen = new Collapsible('collapsible-open')
-const collapsibleClose = new Collapsible('collapsible-close')
-const h2Elmts = document.getElementsByTagName('h2')
-
-for (const element of h2Elmts) {
-    // Addition of the collapsible-h CSS class on each of the headers
-    collapsibleH2.init(element)
-    // Addition of the collapsible-open or collapsible-close CSS class on each header when opening or closing
-    element.addEventListener('click', onClickHandler)
-}
-
-function onClickHandler (event) {
-    const state = true
-    if (state) {
-        collapsibleOpen.init(event.target)
-    } else {
-        collapsibleClose.init(event.target)
+    /**
+     * Displays each collapsible div
+     * @param {*} collapsible
+     */
+    function initCollapsible (collapsible) {
+        collapsible.children[0].classList.add('collapsible-h', 'collapsible-open')
+        collapsible.children[1].classList.add('collapsible-div')
+        collapsible.children[0].addEventListener('click', onClickOpenCloseHandler)
     }
-}
+
+    return {
+        init: function (param) {
+            const collapsibles = document.getElementsByClassName(param.className)
+
+            for (const element of collapsibles) {
+                initCollapsible(element)
+            }
+        }
+    }
+})()
