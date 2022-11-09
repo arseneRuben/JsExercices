@@ -43,8 +43,29 @@ const Transfert = (function () {
         })
     }
 
+    /**
+     * Adds event'listener on group-list
+     * @param {*} param
+     */
+
+    function initTitles (param) {
+        const userList = document.getElementById(param.userListId)
+        const groupList = document.getElementById(param.groupListId)
+
+        const h2UserList = document.createElement('h2')
+        h2UserList.appendChild(document.createTextNode(param.userListTitle))
+
+        const h2GroupList = document.createElement('h2')
+        h2GroupList.appendChild(document.createTextNode(param.groupListTitle))
+
+        const sections = document.getElementsByTagName('section')
+        sections[0].insertBefore(h2UserList, userList)
+        sections[1].insertBefore(h2GroupList, groupList)
+    }
+
     return {
         init: function (param) {
+            initTitles(param)
             initUserList(param)
             initGroupList(param)
         }

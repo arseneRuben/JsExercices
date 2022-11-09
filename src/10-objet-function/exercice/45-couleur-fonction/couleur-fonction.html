@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couleur Fonction</title>
+    <link rel="stylesheet" href="style/couleur-fonction.css">
+</head>
+
+<body>
+    <fieldset>
+        <legend><strong>rgb(r,g,b)</strong></legend>
+
+        <div>
+            <label for="rgb_red">Rouge</label>
+            <input type="range" id="rgb_red" min="0" max="255" value="0" />
+            <span></span>
+        </div>
+
+        <div>
+            <label for="rgb_green">Vert</label>
+            <input type="range" id="rgb_green" min="0" max="255" value="0" />
+            <span></span>
+        </div>
+
+        <div>
+            <label for="rgb_blue">Bleu</label>
+            <input type="range" id="rgb_blue" min="0" max="255" value="0" />
+            <span></span>
+        </div>
+
+        <div id="rgb_display"></div>
+    </fieldset>
+
+    <fieldset>
+        <legend><strong>hsl(h,s,l)</strong></legend>
+
+        <div>
+            <label for="hsl_hue">Hue</label>
+            <input type="range" id="hsl_hue" min="0" max="360" value="0" />
+            <span></span>
+        </div>
+
+        <div>
+            <label for="hsl_saturation">Saturation</label>
+            <input type="range" id="hsl_saturation" min="0" max="100" value="0" />
+            <span></span>
+        </div>
+
+        <div>
+            <label for="hsl_lightness">Lightness</label>
+            <input type="range" id="hsl_lightness" min="0" max="100" value="50" />
+            <span></span>
+        </div>
+
+        <div id="hsl_display"></div>
+    </fieldset>
+
+    <script src="js/couleur-fonction.js"></script>
+</body>
+
+</html>
