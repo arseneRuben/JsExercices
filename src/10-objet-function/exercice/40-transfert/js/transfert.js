@@ -44,7 +44,7 @@ const Transfert = (function () {
     }
 
     /**
-     * Adds event'listener on group-list
+     * Adds titles on each side
      * @param {*} param
      */
 
