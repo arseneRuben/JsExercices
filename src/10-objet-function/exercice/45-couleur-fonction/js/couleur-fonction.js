@@ -2,7 +2,7 @@
 (function () {
     'use strict'
 
-    const SPAN_WITDTH = '75px'
+    const SPAN_WITDTH = '85px'
     function readRgbValues () {
         const red = document.getElementById('rgb_red').value
         const green = document.getElementById('rgb_green').value
@@ -19,20 +19,22 @@
 
     function setRgbBackgroundColors () {
         const rgbDisplay = document.getElementById('rgb_display')
+        const rgb = readRgbValues()
         rgbDisplay.style.width = SPAN_WITDTH
         rgbDisplay.style.height = SPAN_WITDTH
 
-        rgbDisplay.style.backgroundColor = 'rgb(' + readRgbValues().red + ',' + readRgbValues().green + ',' + readRgbValues().blue + ')'
+        rgbDisplay.style.backgroundColor = 'rgb(' + rgb.red + ',' + rgb.green + ',' + rgb.blue + ')'
     }
     function setHslBackgroundColors () {
         const hslDisplay = document.getElementById('hsl_display')
+        const hsl = readHslValues()
         hslDisplay.style.width = SPAN_WITDTH
         hslDisplay.style.height = SPAN_WITDTH
-        hslDisplay.style.backgroundColor = 'hsl(' + readHslValues().hue + ',' + readHslValues().saturation + '%,' + readHslValues().lightness + '%)'
+        hslDisplay.style.backgroundColor = 'hsl(' + hsl.hue + ',' + hsl.saturation + '%,' + hsl.lightness + '%)'
     }
 
     function printValue (event) {
-        event.target.nextElementSibling.appendChild(document.createTextNode(event.target.value))
+        event.target.nextElementSibling.innerHTML = ' ' + event.target.value
     }
 
     function onChange (event) {
@@ -48,7 +50,7 @@
     const inputs = Array.from(document.getElementsByTagName('input'))
 
     inputs.forEach(input => {
-        input.addEventListener('change', function (event) {
+        input.addEventListener('input', function (event) {
             onChange(event)
         })
     })
