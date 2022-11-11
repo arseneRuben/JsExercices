@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Exercice - form-builder</title>
+        <style>
+            #loginForm,
+            #result {
+                margin: auto;
+                width: 500px;
+                border: 1px solid black;
+                padding: 15px;
+            }
+
+            h2 {
+                margin: auto;
+                width: 500px;
+            }
+
+            #loginForm div {
+                padding: 15px;
+            }
+
+            #loginForm button {
+                margin-left: 220px;
+            }
+
+            .label-text,
+            .label-password,
+            .label-number,
+            .label-date,
+            .label-textarea {
+                width: 180px;
+                display: inline-block;
+                text-align: right;
+                padding: 5px;
+            }
+
+            .label-textarea {
+                vertical-align: top;
+            }
+        </style>
+        <script src="js/form-builder.js"></script>
+    </head>
+
+    <body>
+        <h2>Form</h2>
+        <form id="loginForm">
+
+        </form>
+
+        <h2>Result</h2>
+        <pre id="result">
+
+    </pre>
+
+        <script>
+            // Configuration complète du formulaire
+            // La constante FORM représente une simulation de la réponse du serveur en JSON
+            const FORM = {
+                id: 'loginForm',
+                fields: [
+                    {
+                        id: 'userName',
+                        label: 'User name',
+                        required: true,
+                        type: 'text',
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    {
+                        id: 'userPassword',
+                        label: 'Password',
+                        required: true,
+                        type: 'password',
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    {
+                        id: 'userAge',
+                        label: 'Age',
+                        required: true,
+                        type: 'number',
+                        min: 18
+                    },
+                    {
+                        id: 'startDate',
+                        type: 'date',
+                        required: true,
+                        label: 'Date',
+                        min: "2018-01-13",
+                        max: "2018-12-31"
+                    },
+                    {
+                        id: 'userComment',
+                        type: 'textarea',
+                        label: 'Comment',
+                        required: false
+                    },
+                ]
+            }
+            FormBuilder.init(FORM, document.getElementById('result'))
+        </script>
+    </body>
+
+</html>

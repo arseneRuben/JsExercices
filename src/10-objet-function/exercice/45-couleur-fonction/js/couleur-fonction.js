@@ -3,6 +3,7 @@
     'use strict'
 
     const SPAN_WITDTH = '85px'
+
     function readRgbValues () {
         const red = document.getElementById('rgb_red').value
         const green = document.getElementById('rgb_green').value
@@ -22,7 +23,6 @@
         const rgb = readRgbValues()
         rgbDisplay.style.width = SPAN_WITDTH
         rgbDisplay.style.height = SPAN_WITDTH
-
         rgbDisplay.style.backgroundColor = 'rgb(' + rgb.red + ',' + rgb.green + ',' + rgb.blue + ')'
     }
     function setHslBackgroundColors () {
