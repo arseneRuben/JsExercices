@@ -3,52 +3,56 @@ const FormBuilder = (function () {
 
     class FieldBuilder {
         constructor (field) {
-            this.id = field.id
-            this.label = field.label
-            this.type = field.type
-            this.required = field.required
+            this.field = field
         }
 
         build () {
-            const divElement = document.createElement('div')
-            const labelElement = document.createElement('label')
+            const divElement = this.createElement(['div', null])
+            const labelElement = document.createElement(['label', null])
             labelElement.classList.add('label-text')
-            labelElement.for = this.id
-            labelElement.innerHTML = this.label
+            labelElement.for = this.field.id
+            labelElement.innerHTML = this.field.label
             divElement.appendChild(labelElement)
             return divElement
         }
+
+        createElement (tagName, attributes) {
+            const element = document.createElement(tagName)
+            attributes.forEach(att => {
+                const [key, value] = att
+                console.log(key, value)
+                //  element.key = value
+            })
+            return element
+        }
+
+        createFieldElement (tagName, attributes) {
+            const element = this.createElement(tagName, attributes)
+            element.name = attributes.id
+            return element
+        }
     }
+
     class InputFieldBuilder extends FieldBuilder {
-        constructor (field) {
-            super(field)
-            this.maxlength = field.maxlength
-            this.minlength = field.minlength
-            this.min = field.min
-            this.max = field.max
-        }
-
         build () {
             const build = super.build()
-            const inputElement = document.createElement('input')
-            inputElement.type = this.type
+            const inputElement = super.createElment('input', '')
+
             build.appendChild(inputElement)
+
             return build
         }
     }
+
     class TextAreaFieldBuilder extends FieldBuilder {
-        constructor (field) {
-            super(field)
-            this.required = field.required
-        }
-
         build () {
             const build = super.build()
-            const inputElement = document.createElement('textarea')
-            build.appendChild(inputElement)
+            const textareaElement = document.createElement('textarea', '')
+            build.appendChild(textareaElement)
             return build
         }
     }
+
     function displayElements (inputs, outputContainer) {
         const loginForm = document.getElementById(inputs.id)
 
