@@ -29,8 +29,12 @@ const FormBuilder = (function () {
 
         build () {
             const build = super.build()
-            build.classList.add('label-text')
-            return super.build()
+            build.querySelector('label').classList.add('label-text')
+            const inputElement = document.createElement('input')
+            inputElement.type = this.type
+            build.appendChild(inputElement)
+            // console.log(build)
+            return build
         }
     }
     class TextAreaFieldBuilder extends FieldBuilder {
@@ -41,9 +45,17 @@ const FormBuilder = (function () {
     }
     function displayElements (inputs, outputContainer) {
         const userNameDiv = new InputFieldBuilder(inputs.fields[0])
+        const passwordDiv = new InputFieldBuilder(inputs.fields[1])
         const container = document.getElementById(inputs.id)
-        // console.log(userNameDiv.build())
-        container.appendChild(userNameDiv.build())
+        inputs.fields.forEach(field => {
+            if (field.type === 'textarea') {
+                container.appendChild(new TextAreaFieldBuilder(field).build())
+            } else {
+                container.appendChild(new InputFieldBuilder(field).build())
+            }
+        })
+        //  container.appendChild(userNameDiv.build())
+        // container.appendChild(passwordDiv.build())
     }
 
     return {
