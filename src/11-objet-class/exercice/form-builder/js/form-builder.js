@@ -12,6 +12,7 @@ const FormBuilder = (function () {
         build () {
             const divElement = document.createElement('div')
             const labelElement = document.createElement('label')
+            labelElement.classList.add('label-text')
             labelElement.for = this.id
             labelElement.innerHTML = this.label
             divElement.appendChild(labelElement)
@@ -29,11 +30,9 @@ const FormBuilder = (function () {
 
         build () {
             const build = super.build()
-            build.querySelector('label').classList.add('label-text')
             const inputElement = document.createElement('input')
             inputElement.type = this.type
             build.appendChild(inputElement)
-            // console.log(build)
             return build
         }
     }
@@ -42,20 +41,31 @@ const FormBuilder = (function () {
             super(field)
             this.required = field.required
         }
+
+        build () {
+            const build = super.build()
+            const inputElement = document.createElement('textarea')
+            build.appendChild(inputElement)
+            return build
+        }
     }
     function displayElements (inputs, outputContainer) {
-        const userNameDiv = new InputFieldBuilder(inputs.fields[0])
-        const passwordDiv = new InputFieldBuilder(inputs.fields[1])
-        const container = document.getElementById(inputs.id)
+        const loginForm = document.getElementById(inputs.id)
+
+        // Addition of the different form entries
         inputs.fields.forEach(field => {
             if (field.type === 'textarea') {
-                container.appendChild(new TextAreaFieldBuilder(field).build())
+                loginForm.appendChild(new TextAreaFieldBuilder(field).build())
             } else {
-                container.appendChild(new InputFieldBuilder(field).build())
+                loginForm.appendChild(new InputFieldBuilder(field).build())
             }
         })
-        //  container.appendChild(userNameDiv.build())
-        // container.appendChild(passwordDiv.build())
+
+        // Addition of update button
+        const update = document.createElement('button')
+        const t = document.createTextNode('Update')
+        update.appendChild(t)
+        loginForm.appendChild(update)
     }
 
     return {
