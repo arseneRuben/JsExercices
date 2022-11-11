@@ -7,8 +7,8 @@ const FormBuilder = (function () {
         }
 
         build () {
-            const divElement = this.createElement('div', null)
-            const labelElement = document.createElement('label', null)
+            const divElement = this.createElement('div', [])
+            const labelElement = this.createElement('label', [])
             labelElement.classList.add('label-text')
             labelElement.for = this.field.id
             labelElement.innerHTML = this.field.label
@@ -21,7 +21,6 @@ const FormBuilder = (function () {
             attributes.forEach(att => {
                 const [key, value] = att
                 console.log(key, value)
-                //  element.key = value
             })
             return element
         }
@@ -36,7 +35,7 @@ const FormBuilder = (function () {
     class InputFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const inputElement = super.createElment('input', null)
+            const inputElement = super.createElment('input', [])
             build.appendChild(inputElement)
             return build
         }
@@ -45,7 +44,7 @@ const FormBuilder = (function () {
     class TextAreaFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const textareaElement = super.createElement('textarea', null)
+            const textareaElement = super.createElement('textarea', [])
             build.appendChild(textareaElement)
             return build
         }
