@@ -17,11 +17,8 @@ const FormBuilder = (function () {
         }
 
         createElement (tagName, attributes) {
-            const element = document.createElement(tagName)
-            attributes.forEach(att => {
-                const [key, value] = att
-                console.log(key, value)
-            })
+            const element = document.createElement(tagName, attributes)
+
             return element
         }
 
