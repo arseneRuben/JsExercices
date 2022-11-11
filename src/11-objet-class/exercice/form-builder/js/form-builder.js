@@ -36,10 +36,8 @@ const FormBuilder = (function () {
     class InputFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const inputElement = super.createElment('input', '')
-
+            const inputElement = super.createElment('input', null)
             build.appendChild(inputElement)
-
             return build
         }
     }
@@ -47,7 +45,7 @@ const FormBuilder = (function () {
     class TextAreaFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const textareaElement = document.createElement('textarea', '')
+            const textareaElement = super.createElement('textarea', null)
             build.appendChild(textareaElement)
             return build
         }
