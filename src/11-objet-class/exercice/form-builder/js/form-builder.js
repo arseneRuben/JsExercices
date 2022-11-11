@@ -10,7 +10,7 @@ const FormBuilder = (function () {
             const divElement = this.createElement('div', [])
             const labelElement = this.createElement('label', [])
             labelElement.classList.add('label-text')
-            labelElement.for = this.field.id
+            labelElement.setAttribute('for', this.field.id)
             labelElement.innerHTML = this.field.label
             divElement.appendChild(labelElement)
 
@@ -19,17 +19,16 @@ const FormBuilder = (function () {
 
         createElement (tagName, attributes) {
             const element = document.createElement(tagName, attributes)
-
             Object.keys(attributes).forEach(name => {
                 element.setAttribute(name, attributes[name])
             })
-
             return element
         }
 
         createFieldElement (tagName, attributes) {
             const element = this.createElement(tagName, attributes)
             element.name = attributes.id
+
             return element
         }
     }
@@ -38,9 +37,9 @@ const FormBuilder = (function () {
         build () {
             const build = super.build()
             const inputElement = super.createFieldElement('input', this.field)
-
             build.appendChild(inputElement)
 
+            console.log(build)
             return build
         }
     }
@@ -48,7 +47,7 @@ const FormBuilder = (function () {
     class TextAreaFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const textareaElement = super.createElement('textarea', this.field)
+            const textareaElement = super.createFieldElement('textarea', this.field)
             build.appendChild(textareaElement)
             return build
         }
@@ -56,7 +55,6 @@ const FormBuilder = (function () {
 
     function chooseElementType (field) {
         let output
-
         switch (field.type) {
         case 'text':
         case 'password':
@@ -67,7 +65,6 @@ const FormBuilder = (function () {
         case 'textarea':
             output = new TextAreaFieldBuilder(field)
             break
-
         default:
             throw new Error('Unknown type')
         }
