@@ -13,11 +13,16 @@ const FormBuilder = (function () {
             labelElement.for = this.field.id
             labelElement.innerHTML = this.field.label
             divElement.appendChild(labelElement)
+
             return divElement
         }
 
         createElement (tagName, attributes) {
             const element = document.createElement(tagName, attributes)
+
+            Object.keys(attributes).forEach(name => {
+                element.setAttribute(name, attributes[name])
+            })
 
             return element
         }
@@ -32,8 +37,10 @@ const FormBuilder = (function () {
     class InputFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const inputElement = super.createElment('input', [])
+            const inputElement = super.createFieldElement('input', this.field)
+
             build.appendChild(inputElement)
+
             return build
         }
     }
@@ -41,10 +48,31 @@ const FormBuilder = (function () {
     class TextAreaFieldBuilder extends FieldBuilder {
         build () {
             const build = super.build()
-            const textareaElement = super.createElement('textarea', [])
+            const textareaElement = super.createElement('textarea', this.field)
             build.appendChild(textareaElement)
             return build
         }
+    }
+
+    function chooseElementType (field) {
+        let output
+
+        switch (field.type) {
+        case 'text':
+        case 'password':
+        case 'date':
+        case 'number':
+            output = new InputFieldBuilder(field)
+            break
+        case 'textarea':
+            output = new TextAreaFieldBuilder(field)
+            break
+
+        default:
+            throw new Error('Unknown type')
+        }
+
+        return output
     }
 
     function displayElements (inputs, outputContainer) {
@@ -52,11 +80,7 @@ const FormBuilder = (function () {
 
         // Addition of the different form entries
         inputs.fields.forEach(field => {
-            if (field.type === 'textarea') {
-                loginForm.appendChild(new TextAreaFieldBuilder(field).build())
-            } else {
-                loginForm.appendChild(new InputFieldBuilder(field).build())
-            }
+            loginForm.appendChild(chooseElementType(field).build())
         })
 
         // Addition of update button
