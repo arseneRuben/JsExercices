@@ -7,8 +7,8 @@ const FormBuilder = (function () {
         }
 
         build () {
-            const divElement = this.createElement(['div', null])
-            const labelElement = document.createElement(['label', null])
+            const divElement = this.createElement('div', null)
+            const labelElement = document.createElement('label', null)
             labelElement.classList.add('label-text')
             labelElement.for = this.field.id
             labelElement.innerHTML = this.field.label
