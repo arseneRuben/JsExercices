@@ -1,0 +1,73 @@
+Travail pratique - Séquence
+
+Objectif:
+    - Concevoir un jeu permettant de pratiquer votre mémoire.
+
+Déroulement de la partie:
+    - A l'ouverture de l'application
+        - Un bouton intitulé "Lancer la partie" est disponible.
+        - Le message suivant s'affiche: Utilisez le bouton "Lancer la partie" pour débuter.
+        - Le niveau de difficulté est par défaut au niveau normal.
+        - Le nombre de séquence réussi pour la partie en cours est: Total 0
+        - Le nombre de séquence maximum ayant été réussi lors d'une des parties précédentes est: Record 0
+
+    - Après avoir cliqué sur le bouton: "Lancer la partie"
+        - Le bouton "Lancer la partie" devient: "Stopper la partie"
+        - Le message suivant s'affiche pendant la présentation d'une séquence aléatoire: Présentation de la séquence
+        - Le message suivant s'affiche lorsque la présentation de la séquence se termine: À votre tour de reproduire la séquence
+        - Une minuterie de quelques secondes démarre et une balise progress représente l'avancement de la minuterie.
+        - Si la minuterie se termine la partie est terminé, voir: Fenêtre surgissante.
+        - Si le joueur reproduit la séquence sans erreur
+            - La minuterie sera réinitialisée à chaque click
+            - La séquence sera présentée à nouveau et une étape supplémentaire sera ajoutée
+            - Le message suivant s'affiche pendant la présentation d'une séquence aléatoire: Présentation de la séquence
+            - Le message suivant s'affiche lorsque la présentation de la séquence se termine: À votre tour de reproduire la séquence
+        - Si le joueur manque une étape de la séquence, la partie est terminée donc voir la partit: Fenêtre surgissante.
+
+Consignes fonctionnelles:
+    - Fenêtre surgissante
+        - Une fenêtre surgissante bloque l'interaction possible et affiche le titre suivant: Fin de la partie
+        - Si le total de séquence réussi est supérieur au record, le message suivant s'affiche:
+            Félicitations, votre nouveau record est maintenant: {indiquer la valeur actuelle}
+        - Si le total de séquence réussi est inférieur au record, le message suivant s'affiche:
+            Vous avez déjà fait mieux, essayé encore!
+
+    - Mode de difficulté difficile
+        - Exactement le même fonctionnement que la difficulté normale, mais en utilisant 8 boutons
+
+    - La séquence aléatoire
+        - La séquence débute avec une seule étape.
+        - À chaque fois que le joueur réussit à reproduire la séquence, la même séquence est présentée à nouveau
+            avec une étape supplémentaire ajoutée à la fin.
+
+
+Consignes techniques:
+    - La maquette est proposée à titre indicatif seulement, vous êtes libre de choisir les couleurs et la mise en page.
+    - Utiliser seulement le JavaScript natif, aucune librairie.
+    - Si vous créer un nouveau dépôt GIT:
+        - Ne pas oublier de copier les fichiers suivants:
+            .gitignore
+            .eslintrc.js
+            .editorconfig
+            package.json
+        - Exécuter la commande npm install a la racine
+        - À la racine du projet, ajouter un fichier readme.md avec le nom et prénom des membres de l'équipe.
+        - Ajouter les droits en lecture pour votre professeur: martin.vachon@isi-mtl.com
+
+
+Barème de correction sur 100
+
+Fonctionnement
+    - Présentation de la séquence           /10
+    - Barre de progression                  /5
+    - Lecture de la séquence                /15
+    - Affichage des messages                /5
+    - Fenêtre surgissante                   /10
+    - Niveau de difficulté                  /10
+    TOTAL :                                 /55
+
+Général
+    - Travail d'équipe (note individuelle)  /15
+    - Code propre                           /20
+    - Présentation graphique                /10
+    TOTAL :                                 /45

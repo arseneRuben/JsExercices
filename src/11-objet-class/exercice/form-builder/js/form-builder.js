@@ -9,7 +9,7 @@ const FormBuilder = (function () {
         build () {
             const divElement = this.createElement('div', [])
             const labelElement = this.createElement('label', [])
-            labelElement.classList.add('label-text')
+            labelElement.classList.add('label-' + this.field.typecd) // a revoire
             labelElement.setAttribute('for', this.field.id)
             labelElement.innerHTML = this.field.label
             divElement.appendChild(labelElement)
@@ -20,7 +20,9 @@ const FormBuilder = (function () {
         createElement (tagName, attributes) {
             const element = document.createElement(tagName, attributes)
             Object.keys(attributes).forEach(name => {
-                element.setAttribute(name, attributes[name])
+                if (name !== 'label') {
+                    element.setAttribute(name, attributes[name])
+                }
             })
             return element
         }
@@ -38,8 +40,6 @@ const FormBuilder = (function () {
             const build = super.build()
             const inputElement = super.createFieldElement('input', this.field)
             build.appendChild(inputElement)
-
-            console.log(build)
             return build
         }
     }
@@ -72,6 +72,23 @@ const FormBuilder = (function () {
         return output
     }
 
+    /**
+     * processing of values submitted via the form
+     * @param {*} event
+     */
+    function treatment (event, param) {
+        event.preventDefault()
+        // Build an object with submited values comming from loginForm
+        const userData = {}
+        Array.from(event.target.children).forEach(field => {
+            userData[(field.querySelector('input')?.id)] = field.querySelector('input')?.value
+        })
+
+        // Show JSON object in pre tag
+
+        param.output.innerHTML = JSON.stringify(userData, null, '  ')
+    }
+
     function displayElements (inputs, outputContainer) {
         const loginForm = document.getElementById(inputs.id)
 
@@ -85,6 +102,10 @@ const FormBuilder = (function () {
         const t = document.createTextNode('Update')
         update.appendChild(t)
         loginForm.appendChild(update)
+        loginForm.action = 'index.php'
+        loginForm.addEventListener('submit', function (event) {
+            treatment(event, { output: outputContainer, formId: inputs.id })
+        })
     }
 
     return {
