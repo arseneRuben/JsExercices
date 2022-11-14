@@ -9,7 +9,7 @@ const FormBuilder = (function () {
         build () {
             const divElement = this.createElement('div', [])
             const labelElement = this.createElement('label', [])
-            labelElement.classList.add('label-' + this.field.typecd) // a revoire
+            labelElement.classList.add('label-' + this.field.type) // a revoire
             labelElement.setAttribute('for', this.field.id)
             labelElement.innerHTML = this.field.label
             divElement.appendChild(labelElement)
@@ -33,9 +33,12 @@ const FormBuilder = (function () {
 
             return element
         }
+
+        // cette classe parent a 3 methodes
     }
 
     class InputFieldBuilder extends FieldBuilder {
+        // chaque classe field a sa methode build, qui construit de facon specifique l'input correspondant
         build () {
             const build = super.build()
             const inputElement = super.createFieldElement('input', this.field)
@@ -60,7 +63,8 @@ const FormBuilder = (function () {
         case 'password':
         case 'date':
         case 'number':
-            output = new InputFieldBuilder(field)
+            // si le type est un de ces cas, on choisi
+            output = new InputFieldBuilder(field) // deux classe Javascript
             break
         case 'textarea':
             output = new TextAreaFieldBuilder(field)
@@ -93,6 +97,8 @@ const FormBuilder = (function () {
         const loginForm = document.getElementById(inputs.id)
 
         // Addition of the different form entries
+
+        // pour chauqe champ du formulaire, je cree la section correspondante
         inputs.fields.forEach(field => {
             loginForm.appendChild(chooseElementType(field).build())
         })
@@ -110,6 +116,7 @@ const FormBuilder = (function () {
 
     return {
         init: function (FORM, container) {
+            // il est donc question de creer ce formulaire et afficher
             displayElements(FORM, container)
         }
     }

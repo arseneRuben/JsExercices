@@ -59,8 +59,8 @@
             // Configuration complète du formulaire
             // La constante FORM représente une simulation de la réponse du serveur en JSON
             const FORM = {
-                id: 'loginForm',
-                fields: [
+                id: 'loginForm',  // ceci est l'id du formulaire
+                fields: [ // ca ce sont les details des champs du formulaire provenant par exp d'une BD, sous forme de tableau
                     {
                         id: 'userName',
                         label: 'User name',
@@ -101,6 +101,11 @@
                 ]
             }
             FormBuilder.init(FORM, document.getElementById('result'))
+            // il etait question de s'en servir pour generer automatiquement un formulaire a l'appel de ce module
+            // FormBuilder est le nom du module
+            // init est sa methode publique
+            // remarque que cette methode est appelee avec deux arguments
+            // le tableau du form et l'id de l'ouput ou seront affiche est entree utilisateurs
         </script>
     </body>
 
