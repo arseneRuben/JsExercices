@@ -1,4 +1,77 @@
 .container {
-    width: 100vw;
+    width: 95vw;
+    margin: auto;
+    background-color: #dde3ed;
+
+}
+
+
+.container>div {
     text-align: center;
+    font: italic small-caps bold 16px cursive;
+}
+
+.numbers-container {
+    width: 70%;
+}
+
+
+.numbers-container>ul {
+    display: block;
+    list-style: none;
+    width: 90%;
+
+}
+
+#number-1_4 li, #number-5_8 li {
+    display: inline-block;
+    text-align: center;
+    font-size: 4em;
+    margin: 0.5%;
+    background-color: blanchedalmond;
+    border-radius: 10px;
+}
+
+li>div {
+    width: 180px;
+    height: 120px;
+    border-radius: 50%;
+    padding-top: 60px;
+    background-image: linear-gradient(rgb(182, 144, 239), rgb(162, 186, 219));
+
+}
+
+#number-5_8 {
+    display: none;
+}
+
+main {
+    display: flex;
+}
+
+.menu-container {
+    width: 25%;
+
+}
+
+.menus-container>div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden {
+    display: none;
+}
+
+#stop {
+    display: none;
+}
+
+progress#timeout {
+    width: 100%;
+}
+
+#error {
+    display: none;
 }
