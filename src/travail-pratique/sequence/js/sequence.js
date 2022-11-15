@@ -5,8 +5,10 @@ const Sequence = (function () {
     let number1To4Id
     let number5To8Id
     let messageBlock
+    let difficulty
+
     const SIZE = 4
-    const SHOW_TIME = 2000
+    const SHOW_TIME = 1000
     // Round's levels
     const levels = {
         NORMAL: 'NORMAL',
@@ -26,10 +28,17 @@ const Sequence = (function () {
      */
     function goodNumberSeriesChildren (level) {
         let output = Array.from(number1To4Id.children)
-        if (level === levels.NORMAL) {
+        if (level === levels.DIFFICULT) {
             output = output.concat(Array.from(number5To8Id.children))
         }
         return output
+    }
+
+    function setNumberIdHandler () {
+        console.log('display')
+        if (difficulty.value === '1') {
+            number5To8Id.style.display = 'block'
+        }
     }
 
     class Menu {
@@ -39,10 +48,9 @@ const Sequence = (function () {
 
         display () {
             // At the opening of the game
-            const difficulty = document.getElementById(this.param.difficultyId)
-
             const btnStart = document.getElementById(this.param.startId)
             const btnStop = document.getElementById(this.param.stopId)
+
             //      The number of successful sequences for the current game is 0
             const total = document.getElementById(this.param.totalId)
             const totalPoint = 0
@@ -53,6 +61,10 @@ const Sequence = (function () {
             record.innerHTML = '' + recordPoint
 
             let round
+            difficulty = document.getElementById(this.param.difficultyId)
+
+            difficulty.addEventListener('change', setNumberIdHandler)
+
             btnStart.addEventListener('click', function (event) {
                 const sequence = new Sequence([])
                 if (difficulty.value === '0') {
@@ -75,21 +87,29 @@ const Sequence = (function () {
             })
         }
     }
+
+    /**
+     * memory state of steps
+     */
     class Step {
-        constructor (label, state) {
+        constructor (label, state, level) {
             this.label = label
             this.state = state
-            if (state === stepStates.CHOOSEN) {
-                this.show()
-            }
+            this.roundLevel = level
+            this.show()
         }
 
         show () {
-            goodNumberSeriesChildren()[this.label].querySelector('div').style.backgroundColor = 'pink'
+            // console.log(goodNumberSeriesChildren(this.roundLevel), this.label)
+            goodNumberSeriesChildren(this.roundLevel)[this.label - 1].querySelector('div').style.backgroundColor = 'pink'
         }
 
         hide () {
-            goodNumberSeriesChildren()[this.label].querySelector('div').style.backgroundColor = 'white'
+            goodNumberSeriesChildren(this.roundLevel)[this.label - 1].querySelector('div').style.backgroundColor = 'white'
+        }
+
+        toString () {
+            return `Step ${this.label}  ${this.state}   ${this.roundLevel} `
         }
     }
 
@@ -105,35 +125,41 @@ const Sequence = (function () {
     }
 
     class Round {
+        #currentLabelList = []
+        #max
+
         constructor (level = levels.NORMAL, sequence) {
             this.level = level
             this.sequence = sequence
+
+            if (this.level === levels.NORMAL) {
+                this.#max = SIZE
+            } else {
+                this.#max = SIZE * 2
+            }
+            for (let i = 1; i <= this.#max; i++) {
+                this.#currentLabelList.push(i)
+            }
         }
 
         extendSequence () {
-            let max
             let newStep
+            let newPosition
+
             let times = 0
-            if (this.level === levels.NORMAL) {
-                max = SIZE
-            } else {
-                max = SIZE * 2
-            }
-            if (this.sequence.steps.length < max) {
+
+            if (this.sequence.steps.length < this.#max) {
                 // A revoire
+                newPosition = Math.floor(Math.random() * (this.#max - this.sequence.steps.length))
 
-                let result = false
-                do {
-                    newStep = new Step(Math.floor(Math.random() * max), stepStates.CHOOSEN)
-                    if (this.sequence.steps.indexOf(newStep) === -1) {
-                        this.sequence.addStep(newStep)
-
-                        result = true
-                    }
-                } while (!result)
+                newStep = this.#currentLabelList[newPosition]
+                // console.log(newStep)
+                this.#currentLabelList.splice(newPosition, 1)
+                // console.log(this.#currentLabelList)
+                this.sequence.addStep(new Step(newStep, stepStates.CHOOSEN, this.level))
             }
             times++
-            if (times > SIZE) return 0
+            if (times > SIZE * 2) return 0
         }
 
         playSequence () {
@@ -146,7 +172,7 @@ const Sequence = (function () {
 
         showStepts () {
             this.sequence.steps.forEach(step => {
-                goodNumberSeriesChildren(this.level)[step].querySelector('div').style.backgroundColor = 'pink'
+                goodNumberSeriesChildren(this.level)[step - 1].querySelector('div').style.backgroundColor = 'pink'
             })
         }
 
