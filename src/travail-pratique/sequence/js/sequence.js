@@ -1,10 +1,16 @@
 
-const Level = {
-    NORMAL: 'NORMAL',
-    DIFFICULT: 'DIFFICULT'
-}
 const Sequence = (function () {
     'use strict'
+
+    let number1To4Id
+    let number5To8Id
+    let messageBlock
+    const SIZE = 4
+    const SHOW_TIME = 500
+    const levels = {
+        NORMAL: 'NORMAL',
+        DIFFICULT: 'DIFFICULT'
+    }
 
     class Menu {
         constructor (param) {
@@ -28,12 +34,13 @@ const Sequence = (function () {
 
             let round
             btnStart.addEventListener('click', function (event) {
+                const sequence = new Sequence([])
                 if (difficulty.value === '0') {
-                    round = new Round(Level.NORMAL)
+                    round = new Round(levels.NORMAL, sequence)
                 } else {
-                    round = new Round(Level.DIFFICULT)
+                    round = new Round(levels.DIFFICULT, sequence)
                 }
-                round.start()
+                round.playSequence()
                 // btnStop takes place of btnStart
                 btnStart.style.display = 'none'
                 btnStop.style.display = 'block'
@@ -54,22 +61,65 @@ const Sequence = (function () {
     }
 
     class Sequence {
-        constructor (values) {
-            this.values = values
+        // we assume that the steps a collected in an array
+        constructor (steps) {
+            this.steps = steps
+        }
+
+        addStep (newStep) {
+            this.steps.push(newStep)
         }
     }
 
     class Round {
-        constructor (level = Level.NORMAL) {
+        constructor (level = levels.NORMAL, sequence) {
+            this.level = level
+            this.sequence = sequence
+        }
+
+        goodNumberSeriesChildren (level) {
+            return (this.level === levels.NORMAL) ? Array.from(number1To4Id.children) : Array.from(number1To4Id.children).concat(Array.from(number5To8Id.children))
+        }
+
+        extendSequence () {
+            let max
+            let newStep
+            let times = 0
+            // A revoire
+            if (this.level === levels.NORMAL) {
+                max = SIZE
+            } else {
+                max = SIZE * 2
+            }
+            console.log(SHOW_TIME)
+
+            if (this.sequence.steps.length < max) {
+                let result = false
+                do {
+                    newStep = Math.floor(Math.random() * max)
+                    if (this.sequence.steps.indexOf(newStep) === -1) {
+                        this.sequence.addStep(newStep)
+
+                        result = true
+                    }
+                } while (!result)
+            }
+            times++
+            if (times > SIZE) return 0
+        }
+
+        playSequence () {
+            return setInterval(this.extendSequence(), SHOW_TIME)
+        }
+
+        setLevel (level = levels.NORMAL) {
             this.level = level
         }
 
-        setLevel (level = Level.NORMAL) {
-
-        }
-
-        start () {
-            console.log('debut de round')
+        showStepts () {
+            this.sequence.steps.forEach(step => {
+                this.goodNumberSeriesChildren(this.level)[step].querySelector('div').style.backgroundColor = 'pink'
+            })
         }
 
         stop () {
@@ -78,14 +128,16 @@ const Sequence = (function () {
     }
 
     function displayComponents (param) {
-        const number1To4Id = document.getElementById(param.numbers.number1To4Id)
-        const number5To8Id = document.getElementById(param.numbers.number5To8Id)
-        const messageBlock = document.getElementById(param.status.messageId)
+        number1To4Id = document.getElementById(param.numbers.number1To4Id)
+        number5To8Id = document.getElementById(param.numbers.number5To8Id)
+        messageBlock = document.getElementById(param.status.messageId)
         // Default dispositions
         number5To8Id.style.display = 'none' // normal level
         messageBlock.innerHTML = param.status.messages.intro
         const menu = new Menu(param.menus)
-        menu.display()
+        // menu.display()
+        setInterval(console.log(menu), 40)
+        // new Party
     }
 
     return {
