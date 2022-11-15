@@ -2,13 +2,21 @@
 const Sequence = (function () {
     'use strict'
 
+    let progressIntervalId
     let number1To4Id
     let number5To8Id
     let messageBlock
     let difficulty
+    const maxStep = 2
+    let times = 0
+    let sequencePresentationMessage
+    let yourTurnMessage
+    let progress
+    const progressIncrement = 6
 
     const SIZE = 4
-    const SHOW_TIME = 1000
+    const SHOW_TIME = 2000
+    const USER_TIME = 2000
     // Round's levels
     const levels = {
         NORMAL: 'NORMAL',
@@ -38,6 +46,18 @@ const Sequence = (function () {
         console.log('display')
         if (difficulty.value === '1') {
             number5To8Id.style.display = 'block'
+        }
+    }
+
+    function runProgress () {
+        clearInterval(progressIntervalId)
+        progressIntervalId = setInterval(evolve, 1)
+        function evolve () {
+            if (progress.value === progress.max) {
+                clearInterval(progressIntervalId)
+            } else {
+                progress.value += progressIncrement
+            }
         }
     }
 
@@ -100,16 +120,39 @@ const Sequence = (function () {
         }
 
         show () {
-            // console.log(goodNumberSeriesChildren(this.roundLevel), this.label)
-            goodNumberSeriesChildren(this.roundLevel)[this.label - 1].querySelector('div').style.backgroundColor = 'pink'
+            if (this.state === stepStates.CHOOSEN) {
+                this.getDivCell().style.backgroundColor = 'pink'
+            }
         }
 
         hide () {
-            goodNumberSeriesChildren(this.roundLevel)[this.label - 1].querySelector('div').style.backgroundColor = 'white'
+            console.log(this.label)
+            if (this.state === stepStates.WAITING) {
+                this.getDivCell().style.backgroundColor = 'white'
+            }
+        }
+
+        // Returns the reference to the div cell that this state represents
+        getDivCell () {
+            return goodNumberSeriesChildren(this.roundLevel)[this.label - 1].querySelector('div')
         }
 
         toString () {
             return `Step ${this.label}  ${this.state}   ${this.roundLevel} `
+        }
+
+        setState (state) {
+            if (state === stepStates.WAITING) {
+                this.hide()
+                this.getDivCell().addEventListener('click', function (event) {
+                    // this.setState(stepStates.COMPLETED)
+
+                })
+            }
+
+            if (state === stepStates.COMPLETED) {
+                this.show()
+            }
         }
     }
 
@@ -125,6 +168,7 @@ const Sequence = (function () {
     }
 
     class Round {
+        // for automatic selection of new steps
         #currentLabelList = []
         #max
 
@@ -146,8 +190,9 @@ const Sequence = (function () {
             let newStep
             let newPosition
 
-            let times = 0
-
+            times++
+            // Stop  and wait
+            if (times > maxStep) return 0
             if (this.sequence.steps.length < this.#max) {
                 // A revoire
                 newPosition = Math.floor(Math.random() * (this.#max - this.sequence.steps.length))
@@ -157,13 +202,16 @@ const Sequence = (function () {
                 this.#currentLabelList.splice(newPosition, 1)
                 // console.log(this.#currentLabelList)
                 this.sequence.addStep(new Step(newStep, stepStates.CHOOSEN, this.level))
+                // setTimeout()
             }
-            times++
-            if (times > SIZE * 2) return 0
         }
 
         playSequence () {
-            this.intervalId = setInterval(this.extendSequence.bind(this), SHOW_TIME)
+            this.extendSequence()
+            // The following message is displayed during the presentation of a random sequence: Presentation of the sequence
+            messageBlock.innerHTML = sequencePresentationMessage
+            this.intervalId = setTimeout(this.readSequence.bind(this), SHOW_TIME)
+            runProgress()
         }
 
         setLevel (level = levels.NORMAL) {
@@ -172,12 +220,20 @@ const Sequence = (function () {
 
         showStepts () {
             this.sequence.steps.forEach(step => {
-                goodNumberSeriesChildren(this.level)[step - 1].querySelector('div').style.backgroundColor = 'pink'
+                step.show()
             })
         }
 
         stop () {
             console.log('fin de round')
+        }
+
+        readSequence () {
+            this.sequence.steps.forEach(step => {
+                step.setState(stepStates.WAITING)
+            })
+            // The following message is displayed when the sequence presentation ends: Your turn to play the sequence
+            messageBlock.innerHTML = yourTurnMessage
         }
     }
 
@@ -185,9 +241,12 @@ const Sequence = (function () {
         number1To4Id = document.getElementById(param.numbers.number1To4Id)
         number5To8Id = document.getElementById(param.numbers.number5To8Id)
         messageBlock = document.getElementById(param.status.messageId)
+        progress = document.getElementById(param.status.timeoutId)
         // Default dispositions
         number5To8Id.style.display = 'none' // normal level
         messageBlock.innerHTML = param.status.messages.intro
+        sequencePresentationMessage = param.status.messages.playFirst
+        yourTurnMessage = param.status.messages.read
         const menu = new Menu(param.menus)
         menu.display()
         // setInterval(console.log(menu), 40)
