@@ -6,10 +6,30 @@ const Sequence = (function () {
     let number5To8Id
     let messageBlock
     const SIZE = 4
-    const SHOW_TIME = 1000
+    const SHOW_TIME = 2000
+    // Round's levels
     const levels = {
         NORMAL: 'NORMAL',
         DIFFICULT: 'DIFFICULT'
+    }
+
+    // Different possible states of the steps
+    const stepStates = {
+        CHOOSEN: 'CHOOSEN',
+        SHOWED: 'SHOWED',
+        WAITING: 'WAITING',
+        COMPLETED: 'COMPLETED'
+    }
+
+    /**
+     * Returns the correct list of number items according to the level, either the first 4 items (normal level) or all 8 (difficult level)
+     */
+    function goodNumberSeriesChildren (level) {
+        let output = Array.from(number1To4Id.children)
+        if (level === levels.NORMAL) {
+            output = output.concat(Array.from(number5To8Id.children))
+        }
+        return output
     }
 
     class Menu {
@@ -56,8 +76,20 @@ const Sequence = (function () {
         }
     }
     class Step {
-        constructor (label) {
+        constructor (label, state) {
             this.label = label
+            this.state = state
+            if (state === stepStates.CHOOSEN) {
+                this.show()
+            }
+        }
+
+        show () {
+            goodNumberSeriesChildren()[this.label].querySelector('div').style.backgroundColor = 'pink'
+        }
+
+        hide () {
+            goodNumberSeriesChildren()[this.label].querySelector('div').style.backgroundColor = 'white'
         }
     }
 
@@ -78,27 +110,21 @@ const Sequence = (function () {
             this.sequence = sequence
         }
 
-        goodNumberSeriesChildren (level) {
-            return (this.level === levels.NORMAL) ? Array.from(number1To4Id.children) : Array.from(number1To4Id.children).concat(Array.from(number5To8Id.children))
-        }
-
         extendSequence () {
-            console.log(this.sequence)
-            /* if (this.sequence.steps.length < max) {
             let max
             let newStep
             let times = 0
-            // A revoire
             if (this.level === levels.NORMAL) {
                 max = SIZE
             } else {
                 max = SIZE * 2
             }
-            //   console.log(this.sequence)
+            if (this.sequence.steps.length < max) {
+                // A revoire
 
                 let result = false
                 do {
-                    newStep = Math.floor(Math.random() * max)
+                    newStep = new Step(Math.floor(Math.random() * max), stepStates.CHOOSEN)
                     if (this.sequence.steps.indexOf(newStep) === -1) {
                         this.sequence.addStep(newStep)
 
@@ -107,11 +133,11 @@ const Sequence = (function () {
                 } while (!result)
             }
             times++
-            if (times > SIZE) return 0 */
+            if (times > SIZE) return 0
         }
 
         playSequence () {
-            this.intervalId = setInterval(this.extendSequence, SHOW_TIME)
+            this.intervalId = setInterval(this.extendSequence.bind(this), SHOW_TIME)
         }
 
         setLevel (level = levels.NORMAL) {
@@ -120,7 +146,7 @@ const Sequence = (function () {
 
         showStepts () {
             this.sequence.steps.forEach(step => {
-                this.goodNumberSeriesChildren(this.level)[step].querySelector('div').style.backgroundColor = 'pink'
+                goodNumberSeriesChildren(this.level)[step].querySelector('div').style.backgroundColor = 'pink'
             })
         }
 
