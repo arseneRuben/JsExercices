@@ -6,7 +6,7 @@ const Sequence = (function () {
     let number5To8Id
     let messageBlock
     const SIZE = 4
-    const SHOW_TIME = 500
+    const SHOW_TIME = 1000
     const levels = {
         NORMAL: 'NORMAL',
         DIFFICULT: 'DIFFICULT'
@@ -40,6 +40,7 @@ const Sequence = (function () {
                 } else {
                     round = new Round(levels.DIFFICULT, sequence)
                 }
+
                 round.playSequence()
                 // btnStop takes place of btnStart
                 btnStart.style.display = 'none'
@@ -82,6 +83,8 @@ const Sequence = (function () {
         }
 
         extendSequence () {
+            console.log(this.sequence)
+            /* if (this.sequence.steps.length < max) {
             let max
             let newStep
             let times = 0
@@ -91,9 +94,8 @@ const Sequence = (function () {
             } else {
                 max = SIZE * 2
             }
-            console.log(SHOW_TIME)
+            //   console.log(this.sequence)
 
-            if (this.sequence.steps.length < max) {
                 let result = false
                 do {
                     newStep = Math.floor(Math.random() * max)
@@ -105,11 +107,11 @@ const Sequence = (function () {
                 } while (!result)
             }
             times++
-            if (times > SIZE) return 0
+            if (times > SIZE) return 0 */
         }
 
         playSequence () {
-            return setInterval(this.extendSequence(), SHOW_TIME)
+            this.intervalId = setInterval(this.extendSequence, SHOW_TIME)
         }
 
         setLevel (level = levels.NORMAL) {
@@ -135,8 +137,8 @@ const Sequence = (function () {
         number5To8Id.style.display = 'none' // normal level
         messageBlock.innerHTML = param.status.messages.intro
         const menu = new Menu(param.menus)
-        // menu.display()
-        setInterval(console.log(menu), 40)
+        menu.display()
+        // setInterval(console.log(menu), 40)
         // new Party
     }
 
