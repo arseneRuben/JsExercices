@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
             checkBoxElement.setAttribute('value', taskInput.value.trim())
             const labelElement = document.createElement('label')
             labelElement.setAttribute('for', taskInput.value.trim())
-            labelElement.addEventListener('click', checkBoxInputHandler)
+            liElement.addEventListener('click', checkBoxInputHandler)
 
             labelElement.appendChild(checkBoxElement)
             labelElement.appendChild(document.createTextNode(taskInput.value.trim()))
