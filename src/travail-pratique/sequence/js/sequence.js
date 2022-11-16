@@ -7,7 +7,7 @@ const Sequence = (function () {
     let number5To8Id
     let messageBlock
     let difficulty
-    const maxStep = 2
+    const maxStep = 4
     let times = 0
     let sequencePresentationMessage
     let yourTurnMessage
@@ -26,7 +26,6 @@ const Sequence = (function () {
     // Different possible states of the steps
     const stepStates = {
         CHOOSEN: 'CHOOSEN',
-        SHOWED: 'SHOWED',
         WAITING: 'WAITING',
         COMPLETED: 'COMPLETED'
     }
@@ -120,16 +119,15 @@ const Sequence = (function () {
         }
 
         show () {
-            if (this.state === stepStates.CHOOSEN) {
-                this.getDivCell().style.backgroundColor = 'pink'
-            }
+            this.getDivCell().style.backgroundColor = 'pink'
         }
 
         hide () {
-            console.log(this.label)
-            if (this.state === stepStates.WAITING) {
-                this.getDivCell().style.backgroundColor = 'white'
-            }
+            this.getDivCell().style.backgroundColor = 'white'
+        }
+
+        select () {
+            this.getDivCell().style.backgroundColor = 'aqua'
         }
 
         // Returns the reference to the div cell that this state represents
@@ -144,13 +142,13 @@ const Sequence = (function () {
         setState (state) {
             if (state === stepStates.WAITING) {
                 this.hide()
-                this.getDivCell().addEventListener('click', function (event) {
-                    // this.setState(stepStates.COMPLETED)
-
-                })
             }
 
             if (state === stepStates.COMPLETED) {
+                this.select()
+            }
+
+            if (state === stepStates.CHOOSEN) {
                 this.show()
             }
         }
@@ -164,6 +162,10 @@ const Sequence = (function () {
 
         addStep (newStep) {
             this.steps.push(newStep)
+        }
+
+        clearSteps () {
+            this.steps.forEach(step => step.setState(stepStates.WAITING))
         }
     }
 
@@ -192,7 +194,10 @@ const Sequence = (function () {
 
             times++
             // Stop  and wait
-            if (times > maxStep) return 0
+            if (times > maxStep) {
+                this.intervalId = setTimeout(this.readSequence.bind(this), SHOW_TIME / maxStep)
+                return 0
+            }
             if (this.sequence.steps.length < this.#max) {
                 // A revoire
                 newPosition = Math.floor(Math.random() * (this.#max - this.sequence.steps.length))
@@ -202,15 +207,17 @@ const Sequence = (function () {
                 this.#currentLabelList.splice(newPosition, 1)
                 // console.log(this.#currentLabelList)
                 this.sequence.addStep(new Step(newStep, stepStates.CHOOSEN, this.level))
-                // setTimeout()
             }
+            // recursif call
+            this.intervalId = setTimeout(this.extendSequence.bind(this), SHOW_TIME / maxStep)
         }
 
         playSequence () {
+            // Firstly add a maxStep of sequences
             this.extendSequence()
             // The following message is displayed during the presentation of a random sequence: Presentation of the sequence
             messageBlock.innerHTML = sequencePresentationMessage
-            this.intervalId = setTimeout(this.readSequence.bind(this), SHOW_TIME)
+
             runProgress()
         }
 
@@ -225,12 +232,15 @@ const Sequence = (function () {
         }
 
         stop () {
-            console.log('fin de round')
+            this.sequence.clearSteps()
         }
 
         readSequence () {
             this.sequence.steps.forEach(step => {
                 step.setState(stepStates.WAITING)
+                step.getDivCell().addEventListener('click', function (event) {
+                    step.setState(stepStates.COMPLETED)
+                })
             })
             // The following message is displayed when the sequence presentation ends: Your turn to play the sequence
             messageBlock.innerHTML = yourTurnMessage
