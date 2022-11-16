@@ -90,8 +90,7 @@ const Sequence = (function () {
                     round = new Round(levels.NORMAL, sequence)
                 } else {
                     round = new Round(levels.DIFFICULT, sequence)
-                }
-
+                }gi
                 round.playSequence()
                 // btnStop takes place of btnStart
                 btnStart.style.display = 'none'
