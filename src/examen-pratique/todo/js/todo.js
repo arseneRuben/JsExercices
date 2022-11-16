@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
             labelElement.setAttribute('for', taskInput.value.trim())
             liElement.addEventListener('click', checkBoxInputHandler)
 
-            labelElement.appendChild(checkBoxElement)
+            liElement.appendChild(checkBoxElement)
             labelElement.appendChild(document.createTextNode(taskInput.value.trim()))
 
             liElement.appendChild(labelElement)
@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
 
     function checkBoxInputHandler (event) {
         if (event.target.tagName === 'INPUT') {
-            event.target.classList.toggle('strike-task')
+            event.target.nextSibling.classList.toggle('strike-task')
             deleteButton.addEventListener('click', dropLiElement)
             const checkedItems = taskList.querySelectorAll('input:checked')
 
@@ -66,7 +66,8 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
 
     function dropLiElement (event) {
         const checkedItems = taskList.querySelectorAll('input:checked')
-        checkedItems.forEach(item => item.parentNode.parentNode.remove())
+
+        checkedItems.forEach(item => item.parentNode.remove())
         deleteButton.disabled = true
         taskTotal.innerHTML = '(' + taskList.children.length + ')'
     }
