@@ -49,14 +49,18 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     }
 
     function checkBoxInputHandler (event) {
-        event.target.classList.toggle('strike-task')
-        deleteButton.addEventListener('click', dropLiElement)
-        const checkedItems = taskList.querySelectorAll('input:checked')
+        if (event.target.tagName === 'INPUT') {
+            event.target.classList.toggle('strike-task')
+            deleteButton.addEventListener('click', dropLiElement)
+            const checkedItems = taskList.querySelectorAll('input:checked')
 
-        if (checkedItems.length === 0) {
-            deleteButton.disabled = true
-        } else {
-            deleteButton.disabled = false
+            if (checkedItems.length === 0) {
+                deleteButton.disabled = true
+                taskInput.setSelectionRange(0, 0)
+                taskInput.focus()
+            } else {
+                deleteButton.disabled = false
+            }
         }
     }
 
