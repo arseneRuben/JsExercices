@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     const deleteButton = document.getElementById('deleteButton')
 
     function taskInputChangeHandler (event) {
-        if (!(event.target.value.length === 0)) {
+        if (!(event.target.value.trim().length === 0)) {
             addButton.disabled = false
         } else {
             addButton.disabled = true
@@ -26,34 +26,45 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
     addButton.addEventListener('click', onSubmitHandler)
 
     function onSubmitHandler (event) {
-        const liElement = document.createElement('li')
-        const checkBoxElement = document.createElement('input')
-        checkBoxElement.setAttribute('type', 'checkbox')
-        checkBoxElement.setAttribute('name', name)
-        checkBoxElement.setAttribute('id', taskInput.value)
-        checkBoxElement.setAttribute('value', taskInput.value)
-        checkBoxElement.addEventListener('input', checkBoxInputHandler)
-        const labelElement = document.createElement('label')
-        labelElement.setAttribute('for', taskInput.value)
-        labelElement.appendChild(document.createTextNode(taskInput.value))
+        if (!(event.target.value.trim().length === 0)) {
+            const liElement = document.createElement('li')
+            const checkBoxElement = document.createElement('input')
+            checkBoxElement.setAttribute('type', 'checkbox')
+            checkBoxElement.setAttribute('name', name)
+            checkBoxElement.setAttribute('id', taskInput.value.trim())
+            checkBoxElement.setAttribute('value', taskInput.value.trim())
+            const labelElement = document.createElement('label')
+            labelElement.setAttribute('for', taskInput.value.trim())
+            labelElement.addEventListener('click', checkBoxInputHandler)
 
-        liElement.appendChild(checkBoxElement)
-        liElement.appendChild(labelElement)
-        taskList.appendChild(liElement)
-        taskInput.value = null
-        addButton.disabled = true
-        taskTotal.innerHTML = '(' + taskList.children.length + ')'
+            labelElement.appendChild(checkBoxElement)
+            labelElement.appendChild(document.createTextNode(taskInput.value.trim()))
+
+            liElement.appendChild(labelElement)
+            taskList.appendChild(liElement)
+            taskInput.value = null
+            addButton.disabled = true
+            taskTotal.innerHTML = '(' + taskList.children.length + ')'
+        }
     }
 
     function checkBoxInputHandler (event) {
-        deleteButton.disabled = false
+        event.target.classList.toggle('strike-task')
         deleteButton.addEventListener('click', dropLiElement)
+        const checkedItems = taskList.querySelectorAll('input:checked')
+
+        if (checkedItems.length === 0) {
+            deleteButton.disabled = true
+        } else {
+            deleteButton.disabled = false
+        }
     }
 
     function dropLiElement (event) {
         const checkedItems = taskList.querySelectorAll('input:checked')
-        checkedItems.forEach(item => item.parentNode.remove())
+        checkedItems.forEach(item => item.parentNode.parentNode.remove())
         deleteButton.disabled = true
+        taskTotal.innerHTML = '(' + taskList.children.length + ')'
     }
     // pform.addEventListener('submit', treatment)
 }, false)
