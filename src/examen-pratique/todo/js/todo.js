@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', function loaded (event) {
             const checkBoxElement = document.createElement('input')
             checkBoxElement.setAttribute('type', 'checkbox')
             checkBoxElement.setAttribute('name', name)
-            checkBoxElement.setAttribute('id', taskInput.value.trim())
+            // checkBoxElement.setAttribute('id', taskInput.value.trim())
             checkBoxElement.setAttribute('value', taskInput.value.trim())
             const labelElement = document.createElement('label')
             labelElement.setAttribute('for', taskInput.value.trim())
