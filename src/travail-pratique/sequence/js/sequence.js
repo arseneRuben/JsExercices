@@ -8,6 +8,8 @@ const Sequence = (function () {
     let messageBlock
     let difficulty
     let times = 0
+    let total
+    let record
     let sequencePresentationMessage
     let yourTurnMessage
     let progress
@@ -24,8 +26,8 @@ const Sequence = (function () {
 
     // Different possible states of the steps
     const stepStates = {
-        NEW: 'NEW',
-        CHOOSEN: 'CHOOSEN',
+        NEW: 'NEW', // by the game
+        CHOOSEN: 'CHOOSEN', // by user
         WAITING: 'WAITING',
         COMPLETED: 'COMPLETED'
     }
@@ -99,11 +101,11 @@ const Sequence = (function () {
             const btnStop = document.getElementById(this.param.stopId)
 
             //      The number of successful sequences for the current game is 0
-            const total = document.getElementById(this.param.totalId)
+            total = document.getElementById(this.param.totalId)
             const totalPoint = 0
             total.innerHTML = '' + totalPoint
             //      The maximum number of sequences having been successful during one of the previous games is: Record 0
-            const record = document.getElementById(this.param.recordId)
+            record = document.getElementById(this.param.recordId)
             const recordPoint = 0
             record.innerHTML = '' + recordPoint
 
@@ -127,13 +129,17 @@ const Sequence = (function () {
                 btnStop.style.display = 'none'
             })
         }
+
+        static updateStatistic (total, record) {
+
+        }
     }
 
     /**
      * memory state of steps
      */
     class Step {
-        constructor (label, state, level) {
+        constructor (label, state = stepStates.NEW, level) {
             this.label = label
             this.state = state
             this.roundLevel = level
@@ -162,7 +168,7 @@ const Sequence = (function () {
         }
 
         setState (state) {
-            if (state === stepStates.WAITING || state === stepStates.NEW) {
+            if (state === stepStates.WAITING) {
                 this.hide()
             }
 
@@ -170,7 +176,7 @@ const Sequence = (function () {
                 this.select()
             }
 
-            if (state === stepStates.CHOOSEN) {
+            if (state === stepStates.CHOOSEN) { // by user
                 this.show()
             }
         }
@@ -189,14 +195,6 @@ const Sequence = (function () {
 
         clearSteps () {
             this.steps.forEach(step => step.setState(stepStates.WAITING))
-        }
-
-        nextPendingStepIndex () {
-            if (this.pendingStepIndex < this.steps.length) {
-                this.pendingStepIndex++
-            } else {
-                this.pendingStepIndex = 0
-            }
         }
 
         resetSteps () {
@@ -223,6 +221,14 @@ const Sequence = (function () {
             }
         }
 
+        nextPendingStepIndex () {
+            if (this.sequence.pendingStepIndex < this.#maxStep) {
+                this.sequence.pendingStepIndex++
+            } else {
+                this.sequence.pendingStepIndex = 0
+            }
+        }
+
         extendSequence () {
             let newStep
             let newPosition
@@ -243,16 +249,37 @@ const Sequence = (function () {
             }
 
             // recursif call
-            this.intervalId = setTimeout(this.extendSequence.bind(this), STEP_SHOW_TIME)
+        }
+
+        nextStepOnClickHandler (event) {
+            console.log(event.target)
+            /*  if (this.checkStep(step)) {
+                currentRound.nextPendingStepIndex()
+                console.log(currentRound.sequence.pendingStepIndex, currentRound.#maxStep)
+                step.setState(stepStates.COMPLETED)
+                if (currentRound.sequence.pendingStepIndex === currentRound.#maxStep) {
+                    currentRound.nextPendingStepIndex()
+                    currentRound.extendSequence()
+                }
+            } else {
+                alert('echec')
+            } */
         }
 
         playSequence () {
             // Firstly add a maxStep of sequences
             this.extendSequence()
+            const round = this
+            // console.log(round.sequence)
+            setTimeout(function () {
+                round.sequence.steps.forEach(step => {
+                    step.setState(stepStates.WAITING)
+                    step.getDivCell().addEventListener('click', round.nextStepOnClickHandler)
+                })
+            }, STEP_SHOW_TIME)
+            setTimeout(runProgress, STEP_SHOW_TIME)
             // The following message is displayed during the presentation of a random sequence: Presentation of the sequence
             messageBlock.innerHTML = sequencePresentationMessage
-
-            runProgress()
         }
 
         setLevel (level = levels.NORMAL) {
@@ -276,28 +303,6 @@ const Sequence = (function () {
 
         readSequence () {
             const currentRound = this
-
-            // Passage to the waiting state of each of the stages
-            this.sequence.steps.forEach(step => {
-                step.setState(stepStates.WAITING)
-
-                step.getDivCell().addEventListener('click', function (event) {
-                    if (currentRound.checkStep(step)) {
-                        console.log(currentRound.sequence.pendingStepIndex, currentRound.#maxStep)
-                        currentRound.sequence.nextPendingStepIndex()
-                        console.log(currentRound.sequence.pendingStepIndex, currentRound.#maxStep)
-                        step.setState(stepStates.COMPLETED)
-                        if (currentRound.sequence.pendingStepIndex === currentRound.#maxStep) {
-                            //  currentRound.sequence.resetSteps()
-
-                            currentRound.sequence.nextPendingStepIndex()
-                            currentRound.extendSequence()
-                        }
-                    } else {
-                        alert('echec')
-                    }
-                })
-            })
 
             // The following message is displayed when the sequence presentation ends: Your turn to play the sequence
             messageBlock.innerHTML = yourTurnMessage
