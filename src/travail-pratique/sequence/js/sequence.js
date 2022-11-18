@@ -4,6 +4,14 @@ const levels = {
     DIFFICULT: '1'
 }
 
+// Different possible states of the steps
+const stepStates = {
+    NEW: 'NEW', // by the game
+    CHOOSEN: 'CHOOSEN', // by user
+    WAITING: 'WAITING',
+    COMPLETED: 'COMPLETED'
+}
+
 const Sequence = (function () {
     'use strict'
 
@@ -11,34 +19,71 @@ const Sequence = (function () {
     let status
     let numbers
     const sequence = []
-    const availaibleSteps = [1, 2, 3, 4]
-    const quantum = 100
+    const availaibleSteps = []
+
+    const showStepsUnitTime = 1000
+    let showingStepsInterval
+    let currentStepIndex = 0
+    let storageIndex = 0
+    let verificationStepIndex = 0 // helps to check if the choice of the player is well sequenced
 
     function generate (maxSize = availaibleSteps.length) {
         if (availaibleSteps.length > 0) {
             const selectedIndex = Math.floor(Math.random() * (maxSize - sequence.length))
-            sequence.push(availaibleSteps[selectedIndex])
+            sequence.push(new Step(availaibleSteps[selectedIndex], menu.getLevel(), storageIndex++))
             availaibleSteps.splice(selectedIndex, 1)
+            console.log(availaibleSteps)
         }
+        console.log(sequence)
         return sequence
     }
 
     function round () {
+        status.setProgressValue(0)
+        let size = 4
+        verificationStepIndex = 0
+        if (menu.getLevel() === levels.DIFFICULT) {
+            size = 8
+        }
+        for (let i = 0; i < size; i++) {
+            availaibleSteps.push(i)
+        }
         generate()
         showSequence()
+        //  setTimeout(status.runProgress.bind(status), showStepsUnitTime * sequence.length)
+        setTimeout(function () {
+            status.runProgress(showStepsUnitTime)
+        }, showStepsUnitTime * sequence.length)
+    }
+
+    function showSteps () {
+        sequence[currentStepIndex++].setState(stepStates.CHOOSEN)
+        if (currentStepIndex === sequence.length) {
+            clearInterval(showingStepsInterval)
+            setTimeout(hideSequence, showStepsUnitTime * sequence.length)
+        }
+    }
+
+    function hideSequence () {
+        sequence.forEach(step => step.setState(stepStates.WAITING))
     }
 
     function showSequence () {
-        console.log(sequence)
-        readSequence()
+        currentStepIndex = 0
+
+        showingStepsInterval = setInterval(showSteps, showStepsUnitTime)
+
+        //
+        //  readSequence()
     }
 
     function readSequence (maxSize = 4) {
-        let current = 0
-        const selectedIndex = Math.floor(Math.random() * maxSize)
-        while (selectedIndex === sequence[current]) {
+        let current = 0// indice du step en cours
+        const selectedIndex = Math.floor(Math.random() * maxSize) // index que choisi le joueur
+        console.log(current, sequence)
+        while (selectedIndex === sequence[current].getLabel()) {
             current++
-            if (current > sequence.length) {
+            if (current >= sequence.length) {
                 generate()
             }
         }
@@ -47,28 +92,128 @@ const Sequence = (function () {
         }
     }
 
+    // checks if the analyze step is at the good check position in the player's click sequence
+    function checkStep (step) {
+        return sequence.indexOf(step) === verificationStepIndex
+    }
+
+    function resetSteps () {
+        sequence.forEach(step => {
+            step.setState(stepStates.NEW)
+        })
+    }
+
+    /**
+     * memory state of steps
+     */
+    class Step {
+        constructor (label, level, index, state = stepStates.NEW) {
+            this.label = label
+            this.state = state
+            this.roundLevel = level
+            this.index = index // storage index in the sequence table (different from the label)
+            // this.show()
+        }
+
+        getLabel () {
+            return this.label
+        }
+
+        getIndex () {
+            return this.index
+        }
+
+        getState () {
+            return this.state
+        }
+
+        getLevel () {
+            return this.length
+        }
+
+        show () {
+            this.getDivCell().style.backgroundColor = 'pink'
+            this.getDivCell().setAttribute('data-index', this.index)// storage index
+        }
+
+        hide () {
+            this.getDivCell().style.backgroundColor = 'white'
+        }
+
+        select () {
+            this.getDivCell().style.backgroundColor = 'aqua'
+        }
+
+        // Returns the reference to the div cell that this state represents
+        getDivCell () {
+            return Numbers.goodNumberSeriesChildren(this.roundLevel)[this.label].querySelector('div')
+        }
+
+        toString () {
+            return `Step ${this.label}  ${this.state}   ${this.roundLevel} `
+        }
+
+        setState (state) {
+            if (state === stepStates.WAITING) {
+                this.hide()
+                this.getDivCell().addEventListener('click', onClickHandler.bind(this))
+            }
+            if (state === stepStates.NEW) {
+                this.hide()
+            }
+
+            if (state === stepStates.COMPLETED) {
+                this.select()
+            }
+
+            if (state === stepStates.CHOOSEN) { // by user
+                this.show()
+            }
+            function onClickHandler (event) {
+                const step = sequence[event.target.getAttribute('data-index')]
+                step.setState(stepStates.COMPLETED)
+                if (checkStep(step)) {
+                    round()
+                }
+            }
+        }
+    }
+
     class Status {
-        constructor (param) {
+        constructor (param, presentationQuatumTime = 100) {
             this.progress = document.getElementById(param.timeoutId)
 
             this.messageBlock = document.getElementById(param.messageId)
             this.progressIntervalId = 0
             this.progressIncrement = 100
             this.readMessage = param.messages.read
+            this.presentationQuatumTime = presentationQuatumTime
         }
 
-        runProgress () {
+        runProgress (time) {
             clearInterval(this.progressIntervalId)
-            this.progressIntervalId = setInterval(evolve.bind(this), quantum)
+            this.progressIntervalId = setInterval(evolve.bind(this), this.presentationQuatumTime)
 
             function evolve () {
+                setTimeout(this.setMessage(this.readMessage), time * sequence.length)
                 if (this.progress.value === this.progress.max) {
                     clearInterval(this.progressIntervalId)
-                    this.setMessage(this.readMessage)
                 } else {
                     this.progress.value += this.progressIncrement
                 }
             }
+        }
+
+        getPresentationQuatumTime () {
+            return this.presentationQuatumTime
+        }
+
+        setPresentationQuatumTime (time) {
+            this.presentationQuatumTime = time
+        }
+
+        setProgressValue (val) {
+            this.progress.value = val
         }
 
         getProgress () {
@@ -113,6 +258,10 @@ const Sequence = (function () {
             return this.totalInput
         }
 
+        getLevel () {
+            return this.getDifficultyInput().value
+        }
+
         setTotal (total) {
             this.totalInput.value = total
         }
@@ -128,10 +277,10 @@ const Sequence = (function () {
             this.number5To8Id = document.getElementById(param.number5To8Id)
         }
 
-        goodNumberSeriesChildren (level) {
-            let output = Array.from(this.number1To4Id.children)
+        static goodNumberSeriesChildren (level) {
+            let output = Array.from(numbers.number1To4Id.children)
             if (level === levels.DIFFICULT) {
-                output = output.concat(Array.from(this.number5To8Id.children))
+                output = output.concat(Array.from(numbers.number5To8Id.children))
             }
             return output
         }
@@ -161,13 +310,13 @@ const Sequence = (function () {
                 event.target.style.display = 'none'
                 menu.getBtnStop().style.display = 'block'
                 status.setMessage(param.status.messages.playFirst)
-                status.runProgress()
             })
 
             menu.getBtnStop().addEventListener('click', function (event) {
                 // btnStart returns to btnStop
                 menu.getBtnStart().style.display = 'block'
                 event.target.style.display = 'none'
+                status.setProgressValue(0)
             })
 
             menu.getDifficultyInput().addEventListener('change', function (event) {
