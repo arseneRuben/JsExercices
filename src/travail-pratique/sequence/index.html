@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Séquence</title>
-        <script src="js/sequence.js"></script>
-        <link rel="stylesheet" href="css/sequence.css">
-        <link rel="stylesheet" href="css/sequence-theme.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séquence</title>
+    <script src="js/sequence.js"></script>
+    <link rel="stylesheet" href="css/sequence.css">
+    <link rel="stylesheet" href="css/sequence-theme.css">
+</head>
 
-    <body>
-        <div class="container">
-            <div>Séquence</div>
+<body>
+    <div class="container">
+        <div>Séquence</div>
 
-            <main>
-                <div class="numbers-container">
-                    <ul id="number-1_4">
-                        <li data-step="0">
-                            <div>1</div>
-                        </li>
-                        <li data-step="1">
-                            <div>2</div>
-                        </li>
-                        <li data-step="2">
-                            <div>3</div>
-                        </li>
-                        <li data-step="3">
-                            <div>4</div>
-                        </li>
-                    </ul>
-                    <ul id="number-5_8">
-                        <li data-step="4">
-                            <div>5</div>
-                        </li>
-                        <li data-step="5">
-                            <div>6</div>
-                        </li>
-                        <li data-step="6">
-                            <div>7</div>
-                        </li>
-                        <li data-step="7">
-                            <div>8</div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="menus-container">
-                    <div>
-                        <label>Total:</label>
-                        <span id="total">0</span>
-                    </div>
-                    <div>
-                        <label>Record:</label>
-                        <span id="record">0</span>
-                    </div>
-                    <div>
-                        <label for="difficulty">Difficulté:</label>
-                        <select name="difficulty" id="difficulty">
-                            <option value="0">Normal</option>
-                            <option value="1">Difficile</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button id="start">Lancer la partie</button>
-                        <button id="stop">Stopper la partie</button>
-                    </div>
-                </div>
-            </main>
-
-            <div class="status-container">
-                <progress id="timeout" value="0" max="3000">0</progress>
-                <h3 id="message">Initialization ...</h3>
+        <main>
+            <div class="numbers-container">
+                <ul id="number-1_4">
+                    <li data-step="0">
+                        <div>1</div>
+                    </li>
+                    <li data-step="1">
+                        <div>2</div>
+                    </li>
+                    <li data-step="2">
+                        <div>3</div>
+                    </li>
+                    <li data-step="3">
+                        <div>4</div>
+                    </li>
+                </ul>
+                <ul id="number-5_8">
+                    <li data-step="4">
+                        <div>5</div>
+                    </li>
+                    <li data-step="5">
+                        <div>6</div>
+                    </li>
+                    <li data-step="6">
+                        <div>7</div>
+                    </li>
+                    <li data-step="7">
+                        <div>8</div>
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <div id="error" class="error-modal hide-error">
-            <div class="error-popup">
-                <div class="error-popup-container">
-                    <h2>Fin de la partie</h2>
-                    <p></p>
+            <div class="menus-container">
+                <div>
+                    <label>Total:</label>
+                    <span id="total">0</span>
                 </div>
                 <div>
-                    <button>Fermé</button>
+                    <label>Record:</label>
+                    <span id="record">0</span>
+                </div>
+                <div>
+                    <label for="difficulty">Difficulté:</label>
+                    <select name="difficulty" id="difficulty">
+                        <option value="0">Normal</option>
+                        <option value="1">Difficile</option>
+                    </select>
+                </div>
+                <div>
+                    <button id="start">Lancer la partie</button>
+                    <button id="stop">Stopper la partie</button>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <script>
-            Sequence.init({
-                numbers: {
-                    number1To4Id: "number-1_4",
-                    number5To8Id: "number-5_8"
-                },
-                menus: {
-                    startId: 'start',
-                    stopId: 'stop',
-                    difficultyId: 'difficulty',
-                    totalId: 'total',
-                    recordId: 'record'
-                },
-                status: {
-                    timeoutId: 'timeout',
-                    messageId: 'message',
-                    messages: {
-                        intro: 'Utilisez le bouton "Lancer la partie" pour débuter',
-                        playFirst: 'Présentation de la séquence',
-                        playNext: 'Excellent, présentation de la nouvelle séquence',
-                        read: 'À votre tour de reproduire la séquence',
-                    }
-                },
-                error: {
-                    errorId: 'error',
-                    newRecord: 'Félicitations, votre nouveau record est maintenant:',
-                    notGood: 'Vous avez déjà fait mieux, essayé encore!'
+        <div class="status-container">
+            <progress id="timeout" value="0" max="3000">0</progress>
+            <h3 id="message">Initialization ...</h3>
+        </div>
+    </div>
+
+    <div id="error" class="error-modal hide-error">
+        <div class="error-popup">
+            <div class="error-popup-container">
+                <h2>Fin de la partie</h2>
+                <p></p>
+            </div>
+            <div>
+                <button>Fermé</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Sequence.init({
+            numbers: {
+                number1To4Id: "number-1_4",
+                number5To8Id: "number-5_8"
+            },
+            menus: {
+                startId: 'start',
+                stopId: 'stop',
+                difficultyId: 'difficulty',
+                totalId: 'total',
+                recordId: 'record'
+            },
+            status: {
+                timeoutId: 'timeout',
+                messageId: 'message',
+                messages: {
+                    intro: 'Utilisez le bouton "Lancer la partie" pour débuter',
+                    playFirst: 'Présentation de la séquence',
+                    playNext: 'Excellent, présentation de la nouvelle séquence',
+                    read: 'À votre tour de reproduire la séquence',
                 }
-            })
-        </script>
-    </body>
+            },
+            error: {
+                errorId: 'error',
+                newRecord: 'Félicitations, votre nouveau record est maintenant:',
+                notGood: 'Vous avez déjà fait mieux, essayé encore!'
+            }
+        })
+    </script>
+</body>
 
 </html>

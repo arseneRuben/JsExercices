@@ -16,7 +16,7 @@ Déroulement de la partie:
         - Le message suivant s'affiche pendant la présentation d'une séquence aléatoire: Présentation de la séquence
         - Le message suivant s'affiche lorsque la présentation de la séquence se termine: À votre tour de reproduire la séquence
         - Une minuterie de quelques secondes démarre et une balise progress représente l'avancement de la minuterie.
-        - Si la minuterie se termine la partie est terminé, voir: Fenêtre surgissante.
+        - Si la minuterie se termine la partie est terminée, voir: Fenêtre surgissante.
         - Si le joueur reproduit la séquence sans erreur
             - La minuterie sera réinitialisée à chaque click
             - La séquence sera présentée à nouveau et une étape supplémentaire sera ajoutée
