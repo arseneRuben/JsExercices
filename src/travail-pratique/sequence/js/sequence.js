@@ -32,9 +32,8 @@ const Sequence = (function () {
             const selectedIndex = Math.floor(Math.random() * (maxSize - sequence.length))
             sequence.push(new Step(availaibleSteps[selectedIndex], menu.getLevel(), storageIndex++))
             availaibleSteps.splice(selectedIndex, 1)
-            console.log(availaibleSteps)
         }
-        console.log(sequence)
+        console.log(availaibleSteps)
         return sequence
     }
 
@@ -42,12 +41,23 @@ const Sequence = (function () {
         status.setProgressValue(0)
         let size = 4
         verificationStepIndex = 0
+
         if (menu.getLevel() === levels.DIFFICULT) {
             size = 8
         }
+
         for (let i = 0; i < size; i++) {
             availaibleSteps.push(i)
         }
+        /* if (sequence.length === size || sequence.length === 0) {
+            availaibleSteps = []
+            for (let i = 0; i < size; i++) {
+                availaibleSteps.push(i)
+            }
+            if (sequence.length === size) {
+                sequence = []
+            }
+        } */
         generate()
         showSequence()
         //  setTimeout(status.runProgress.bind(status), showStepsUnitTime * sequence.length)
@@ -57,11 +67,12 @@ const Sequence = (function () {
     }
 
     function showSteps () {
-        sequence[currentStepIndex++].setState(stepStates.CHOOSEN)
+        sequence[currentStepIndex].setState(stepStates.CHOOSEN)
         if (currentStepIndex === sequence.length) {
             clearInterval(showingStepsInterval)
             setTimeout(hideSequence, showStepsUnitTime * sequence.length)
         }
+        currentStepIndex++
     }
 
     function hideSequence () {
@@ -173,7 +184,11 @@ const Sequence = (function () {
                 const step = sequence[event.target.getAttribute('data-index')]
                 step.setState(stepStates.COMPLETED)
                 if (checkStep(step)) {
-                    round()
+                    // round()
+                    verificationStepIndex++
+                    if (verificationStepIndex === sequence.length) {
+                        round()
+                    }
                 }
             }
         }
