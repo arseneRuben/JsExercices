@@ -1,25 +1,25 @@
-// Round's levels
-const levels = {
-    NORMAL: '0',
-    DIFFICULT: '1'
-}
-
-// Different possible states of the steps
-const stepStates = {
-    NEW: 'NEW', // by the game
-    CHOOSEN: 'CHOOSEN', // by user
-    WAITING: 'WAITING',
-    COMPLETED: 'COMPLETED'
-}
 
 const Sequence = (function () {
     'use strict'
+
+    // Round's levels
+    const levels = {
+        NORMAL: '0',
+        DIFFICULT: '1'
+    }
+
+    // Different possible states of the steps
+    const stepStates = {
+        NEW: 'NEW', // by the game
+        CHOOSEN: 'CHOOSEN', // by user
+        WAITING: 'WAITING',
+        COMPLETED: 'COMPLETED'
+    }
 
     let menu
     let status
     let numbers
     const sequence = []
-    const availaibleSteps = []
 
     const showStepsUnitTime = 1000
     let showingStepsInterval
@@ -27,13 +27,10 @@ const Sequence = (function () {
     let storageIndex = 0
     let verificationStepIndex = 0 // helps to check if the choice of the player is well sequenced
 
-    function generate (maxSize = availaibleSteps.length) {
-        if (availaibleSteps.length > 0) {
-            const selectedIndex = Math.floor(Math.random() * (maxSize - sequence.length))
-            sequence.push(new Step(availaibleSteps[selectedIndex], menu.getLevel(), storageIndex++))
-            availaibleSteps.splice(selectedIndex, 1)
-        }
-        console.log(availaibleSteps)
+    function generate (maxSize = 4) {
+        const selectedIndex = Math.floor(Math.random() * maxSize)
+        sequence.push(new Step(selectedIndex, menu.getLevel(), storageIndex++))
+
         return sequence
     }
 
@@ -46,19 +43,7 @@ const Sequence = (function () {
             size = 8
         }
 
-        for (let i = 0; i < size; i++) {
-            availaibleSteps.push(i)
-        }
-        /* if (sequence.length === size || sequence.length === 0) {
-            availaibleSteps = []
-            for (let i = 0; i < size; i++) {
-                availaibleSteps.push(i)
-            }
-            if (sequence.length === size) {
-                sequence = []
-            }
-        } */
-        generate()
+        generate(size)
         showSequence()
         //  setTimeout(status.runProgress.bind(status), showStepsUnitTime * sequence.length)
         setTimeout(function () {
@@ -67,11 +52,13 @@ const Sequence = (function () {
     }
 
     function showSteps () {
-        sequence[currentStepIndex].setState(stepStates.CHOOSEN)
         if (currentStepIndex === sequence.length) {
             clearInterval(showingStepsInterval)
             setTimeout(hideSequence, showStepsUnitTime * sequence.length)
+            return 0
         }
+        sequence[currentStepIndex].setState(stepStates.CHOOSEN)
+
         currentStepIndex++
     }
 
@@ -167,7 +154,7 @@ const Sequence = (function () {
         setState (state) {
             if (state === stepStates.WAITING) {
                 this.hide()
-                this.getDivCell().addEventListener('click', onClickHandler.bind(this))
+                this.getDivCell().addEventListener('click', onClickHandler)
             }
             if (state === stepStates.NEW) {
                 this.hide()
