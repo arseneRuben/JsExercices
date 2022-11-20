@@ -37,7 +37,6 @@ const Sequence = (function () {
     function round () {
         status.setProgressValue(0)
         let size = 4
-        verificationStepIndex = 0
 
         if (menu.getLevel() === levels.DIFFICULT) {
             size = 8
@@ -171,9 +170,12 @@ const Sequence = (function () {
                 const step = sequence[event.target.getAttribute('data-index')]
                 step.setState(stepStates.COMPLETED)
                 if (checkStep(step)) {
-                    // round()
                     verificationStepIndex++
                     if (verificationStepIndex === sequence.length) {
+                        console.log(menu.getTotalInput(), verificationStepIndex)
+                        verificationStepIndex = 0
+                        menu.setTotal(Number(menu.getTotalInput().innerHTML) + 1)
+                        menu.setRecord(Number(menu.getRecordInput().innerHTML) + 1)
                         round()
                     }
                 }
@@ -265,11 +267,11 @@ const Sequence = (function () {
         }
 
         setTotal (total) {
-            this.totalInput.value = total
+            this.totalInput.innerHTML = total
         }
 
         setRecord (record) {
-            this.recordInput.value = record
+            this.recordInput.innerHTML = record
         }
     }
 
